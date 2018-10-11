@@ -12,6 +12,12 @@
 		76DFAD24216A3AF6007922AF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76DFAD22216A3AF6007922AF /* Main.storyboard */; };
 		76DFAD26216A3AF8007922AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76DFAD25216A3AF8007922AF /* Assets.xcassets */; };
 		76DFAD29216A3AF8007922AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76DFAD27216A3AF8007922AF /* LaunchScreen.storyboard */; };
+		76DFAD48216D35D5007922AF /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DFAD47216D35D5007922AF /* CategoryViewController.swift */; };
+		76DFAD6C216D368D007922AF /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 76DFAD6A216D368D007922AF /* DataModel.xcdatamodeld */; };
+		76DFAD72216E1F8A007922AF /* RoundedShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DFAD6F216E1F89007922AF /* RoundedShadowView.swift */; };
+		76DFAD73216E1F8A007922AF /* RoundedShadowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DFAD70216E1F8A007922AF /* RoundedShadowButton.swift */; };
+		76DFAD74216E1F8A007922AF /* RoundedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DFAD71216E1F8A007922AF /* RoundedImageView.swift */; };
+		76DFAD78216F245C007922AF /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DFAD77216F245C007922AF /* CameraViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +28,12 @@
 		76DFAD25216A3AF8007922AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		76DFAD28216A3AF8007922AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		76DFAD2A216A3AF8007922AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		76DFAD47216D35D5007922AF /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
+		76DFAD6B216D368D007922AF /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		76DFAD6F216E1F89007922AF /* RoundedShadowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedShadowView.swift; sourceTree = "<group>"; };
+		76DFAD70216E1F8A007922AF /* RoundedShadowButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedShadowButton.swift; sourceTree = "<group>"; };
+		76DFAD71216E1F8A007922AF /* RoundedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
+		76DFAD77216F245C007922AF /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,13 +67,51 @@
 			isa = PBXGroup;
 			children = (
 				76DFAD1E216A3AF6007922AF /* AppDelegate.swift */,
-				76DFAD20216A3AF6007922AF /* TodoListViewController.swift */,
-				76DFAD22216A3AF6007922AF /* Main.storyboard */,
-				76DFAD25216A3AF8007922AF /* Assets.xcassets */,
-				76DFAD27216A3AF8007922AF /* LaunchScreen.storyboard */,
+				76DFAD33216A6DEA007922AF /* Controllers */,
+				76DFAD32216A6DA3007922AF /* Data Model */,
+				76DFAD34216A6DFA007922AF /* Views */,
+				76DFAD35216A6E2C007922AF /* Supporting Files */,
 				76DFAD2A216A3AF8007922AF /* Info.plist */,
 			);
 			path = Todoey;
+			sourceTree = "<group>";
+		};
+		76DFAD32216A6DA3007922AF /* Data Model */ = {
+			isa = PBXGroup;
+			children = (
+				76DFAD6A216D368D007922AF /* DataModel.xcdatamodeld */,
+			);
+			path = "Data Model";
+			sourceTree = "<group>";
+		};
+		76DFAD33216A6DEA007922AF /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				76DFAD47216D35D5007922AF /* CategoryViewController.swift */,
+				76DFAD20216A3AF6007922AF /* TodoListViewController.swift */,
+				76DFAD77216F245C007922AF /* CameraViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		76DFAD34216A6DFA007922AF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				76DFAD71216E1F8A007922AF /* RoundedImageView.swift */,
+				76DFAD70216E1F8A007922AF /* RoundedShadowButton.swift */,
+				76DFAD6F216E1F89007922AF /* RoundedShadowView.swift */,
+				76DFAD22216A3AF6007922AF /* Main.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		76DFAD35216A6E2C007922AF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				76DFAD25216A3AF8007922AF /* Assets.xcassets */,
+				76DFAD27216A3AF8007922AF /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,6 +185,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76DFAD74216E1F8A007922AF /* RoundedImageView.swift in Sources */,
+				76DFAD73216E1F8A007922AF /* RoundedShadowButton.swift in Sources */,
+				76DFAD48216D35D5007922AF /* CategoryViewController.swift in Sources */,
+				76DFAD6C216D368D007922AF /* DataModel.xcdatamodeld in Sources */,
+				76DFAD72216E1F8A007922AF /* RoundedShadowView.swift in Sources */,
+				76DFAD78216F245C007922AF /* CameraViewController.swift in Sources */,
 				76DFAD21216A3AF6007922AF /* TodoListViewController.swift in Sources */,
 				76DFAD1F216A3AF6007922AF /* AppDelegate.swift in Sources */,
 			);
@@ -334,6 +390,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		76DFAD6A216D368D007922AF /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				76DFAD6B216D368D007922AF /* DataModel.xcdatamodel */,
+			);
+			currentVersion = 76DFAD6B216D368D007922AF /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 76DFAD13216A3AF5007922AF /* Project object */;
 }
