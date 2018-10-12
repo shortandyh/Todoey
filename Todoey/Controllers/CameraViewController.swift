@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import CoreData
 
 class CameraViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate {
     
@@ -174,9 +175,9 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         //        let data = UIImageJPEGRepresentation(image!, 1) as NSData?
         let image = UIImage(data: photoData!)
         let data = UIImageJPEGRepresentation(image!, 1) as Data?
-        let newPic = ProjectImage(context: self.context)
-        newPic.sImage = data
-        newPic.sName = projectName
+        let newPic = Item(context: self.context)
+        newPic.itemImage = data
+        newPic.title = projectName
         //        newPic.parentProject = CameraSnappedVC.selectedProject
         self.itemArray.append(newPic)
         

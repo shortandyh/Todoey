@@ -95,7 +95,7 @@ class TodoListViewController: UITableViewController {
         
         cell.textLabel?.text = item.title
         
-        cell.accessoryType = item.done ? .checkmark : .none
+        //cell.accessoryType = item.done ? .checkmark : .none
         
         return cell
     }
@@ -103,7 +103,7 @@ class TodoListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //print(itemArray[indexPath.row])
         
-        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+        //itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
         tableView.reloadData()
         
@@ -120,7 +120,7 @@ class TodoListViewController: UITableViewController {
             
             let newItem = Item(context: self.context)
             newItem.title = textField.text!
-            newItem.done = false
+            //newItem.done = false
             newItem.parentCategory = self.selectedCategory
             self.itemArray.append(newItem)
             
