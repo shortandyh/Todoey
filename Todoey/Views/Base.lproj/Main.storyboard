@@ -43,12 +43,74 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="o6w-5I-9Bn" kind="show" identifier="goToItems" id="J2Y-ME-at4"/>
+                        <segue destination="bLg-ih-cKh" kind="show" identifier="goToPhotos" id="WjG-xv-AFq"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PU5-pM-ggT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2532" y="247"/>
+            <point key="canvasLocation" x="2822" y="400"/>
+        </scene>
+        <!--Photos Collection View Controller-->
+        <scene sceneID="DKr-E8-rhc">
+            <objects>
+                <collectionViewController id="bLg-ih-cKh" customClass="PhotosCollectionViewController" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="gDo-lg-ZPQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.8697718579" green="0.8697718579" blue="0.8697718579" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" red="0.64562182739999996" green="0.16738666569999999" blue="0.0022067292749999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cYI-I7-xCx">
+                            <size key="itemSize" width="114" height="127"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotosCell" id="eEW-pb-3sF" customClass="PhotoCell" customModule="Todoey" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="114" height="127"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                    <rect key="frame" x="0.0" y="0.0" width="114" height="127"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jN4-In-DN5">
+                                            <rect key="frame" x="5" y="5" width="104" height="92"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NNC-pD-gbq">
+                                            <rect key="frame" x="5" y="101" width="104" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </view>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="NNC-pD-gbq" firstAttribute="top" secondItem="jN4-In-DN5" secondAttribute="bottom" constant="4" id="0CC-zk-02V"/>
+                                    <constraint firstItem="NNC-pD-gbq" firstAttribute="width" secondItem="jN4-In-DN5" secondAttribute="width" id="ADm-PP-LYy"/>
+                                    <constraint firstAttribute="trailing" secondItem="jN4-In-DN5" secondAttribute="trailing" constant="5" id="OQ5-oi-R8M"/>
+                                    <constraint firstItem="jN4-In-DN5" firstAttribute="leading" secondItem="eEW-pb-3sF" secondAttribute="leading" constant="5" id="PdX-u6-Jqh"/>
+                                    <constraint firstItem="jN4-In-DN5" firstAttribute="top" secondItem="eEW-pb-3sF" secondAttribute="top" constant="5" id="Rn5-2Q-ffK"/>
+                                    <constraint firstItem="jN4-In-DN5" firstAttribute="centerX" secondItem="eEW-pb-3sF" secondAttribute="centerX" id="UdB-eP-sP9"/>
+                                    <constraint firstAttribute="bottom" secondItem="NNC-pD-gbq" secondAttribute="bottom" constant="5" id="e2d-xb-cD1"/>
+                                    <constraint firstItem="NNC-pD-gbq" firstAttribute="centerX" secondItem="eEW-pb-3sF" secondAttribute="centerX" id="jVs-1r-x59"/>
+                                    <constraint firstAttribute="bottom" secondItem="jN4-In-DN5" secondAttribute="bottom" constant="30" id="lcR-tT-fgs"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="photoLabel" destination="NNC-pD-gbq" id="O9N-Ze-CQY"/>
+                                    <outlet property="savedPhotoView" destination="jN4-In-DN5" id="AyC-xv-DNH"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="bLg-ih-cKh" id="W7y-eR-HyM"/>
+                            <outlet property="delegate" destination="bLg-ih-cKh" id="HBJ-u9-5lt"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cjj-TO-8jU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3712.8000000000002" y="399.85007496251876"/>
         </scene>
         <!--Items-->
         <scene sceneID="66H-dH-nTQ">
@@ -97,7 +159,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gbg-dV-Sfr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3421.5999999999999" y="-122.78860569715144"/>
+            <point key="canvasLocation" x="4465" y="-393"/>
         </scene>
         <!--Item-->
         <scene sceneID="PAd-ft-YYP">
@@ -108,9 +170,14 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="HUu-7i-GNb">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.43153009587839303" green="0.59080066426194477" blue="0.65127300126903553" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" red="0.64562182739999996" green="0.16738666569999999" blue="0.0022067292749999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                            <color key="textColor" red="0.64562182739999996" green="0.16738666569999999" blue="0.0022067292749999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -120,7 +187,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OED-sQ-dEh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1417" y="247"/>
+            <point key="canvasLocation" x="1923" y="400"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="3WH-bm-AEL">
@@ -139,7 +206,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jlk-64-TGj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1418" y="-549"/>
+            <point key="canvasLocation" x="1923" y="-550"/>
         </scene>
         <!--Camera-->
         <scene sceneID="Jju-qm-LBq">
@@ -342,7 +409,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Obx-rH-SBQ" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2532" y="-549"/>
+            <point key="canvasLocation" x="2822" y="-550"/>
         </scene>
     </scenes>
     <resources>

@@ -23,8 +23,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     
     var categories = [Category]()
     var itemArray = [Item]()
-    
-    //    var CameraSnappedVC : SnappedVC = SnappedVC()
+    var PhotoVC: PhotosCollectionViewController = PhotosCollectionViewController()
     
     var selectedProject : Category? {
         didSet{
@@ -70,6 +69,8 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         view.addSubview(capturedImageView)
         view.addSubview(flippedTableView)
         
+//        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+        
         
     }
     
@@ -108,7 +109,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
                 captureSession.addOutput(cameraOutput!)
                 
                 previewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
-                previewLayer.videoGravity = AVLayerVideoGravity.resizeAspect
+                previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
                 previewLayer.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
                 
                 cameraView.layer.addSublayer(previewLayer!)
@@ -148,7 +149,14 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         thumbBtn.isHidden = true
         clearBtn.isHidden = true
         
-        saveImage()
+        let newPic = Item(context: self.context)
+        newPic.itemImage = photoData
+        newPic.title = projectName
+        newPic.parentCategory = PhotoVC.selectedCategory
+        //        newPic.parentProject = CameraSnappedVC.selectedProject
+        self.itemArray.append(newPic)
+        
+        saveImagesToContext()
     }
     
 
@@ -171,27 +179,22 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     //MARK: - Objective C Functions
     @objc func saveImage() {
         
-        //        let image = self.captureImageView.image
-        //        let data = UIImageJPEGRepresentation(image!, 1) as NSData?
-        let image = UIImage(data: photoData!)
-        let data = UIImageJPEGRepresentation(image!, 1) as Data?
+
+        if let indexPath = tableView.indexPathForSelectedRow {
+            self.selectedProject = categories[indexPath.row]
+        }
         let newPic = Item(context: self.context)
+        let image = capturedImageView.image
+        let data = UIImageJPEGRepresentation(image!, 1) as Data?
         newPic.itemImage = data
         newPic.title = projectName
+        newPic.parentCategory = self.selectedProject
         //        newPic.parentProject = CameraSnappedVC.selectedProject
         self.itemArray.append(newPic)
         
-        self.saveImage()
+        saveImagesToContext()
         
-        //        do {
-        //            try context.save()
-        //        } catch {
-        //            print("Error saving project \(error)")
-        //        }
-        
-        
-        //
-        //fileManager.createFile(atPath: imagePath as String, contents: data, attributes: nil)
+
         
     }
     
@@ -244,20 +247,17 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
             self.visualEffectedView.effect = nil
             
         })
-        //        { (success: Bool) in
-        //            //self.captureImageView.removeFromSuperview()
-        //
-        //        }
+
     }
     
-    func saveProjects() {
+    func saveImagesToContext() {
         do {
             try context.save()
         } catch {
             print("Error saving project \(error)")
         }
         
-        tableView.reloadData()
+//        self.PhotoVC.collectionView?.reloadData()
         
     }
     
@@ -287,8 +287,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "flippedProjectCell", for: indexPath)
         cell.textLabel?.text = categories[indexPath.row].name
-        //        let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
-        //        cell.textLabel?.text = project[indexPath.row].name
+
         cell.textLabel?.font = UIFont(name: "Helvetica Neue Light", size: 18.0)
         //cell.detailTextLabel?.text = ""
         return cell
@@ -304,6 +303,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     
     
 }
+
 
 //MARK: - Extension
 extension CameraViewController: AVCapturePhotoCaptureDelegate {
@@ -328,4 +328,93 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
     
     
 }
+//        let image = self.captureImageView.image
+//        let data = UIImageJPEGRepresentation(image!, 1) as NSData?
 
+//        let image = UIImage(data: photoData!)
+//        let data = UIImageJPEGRepresentation(image!, 1) as Data?
+
+
+//    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+//
+//        var textField = UITextField()
+//
+//        let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
+//
+//        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+//
+//            let newItem = Item(context: self.context)
+//            newItem.title = textField.text!
+//            //newItem.done = false
+//            newItem.parentCategory = self.selectedCategory
+//            self.itemArray.append(newItem)
+//
+//            //self.defaults.set(self.itemArray, forKey: "ToDoListArray")
+//
+//            self.tableView.reloadData()
+//
+//        }
+//
+//        alert.addTextField { (alertTextField) in
+//            alertTextField.placeholder = "Create New Item"
+//            textField = alertTextField
+//
+//        }
+//
+//        alert.addAction(action)
+//
+//        present(alert, animated: true, completion: nil)
+//    }
+
+//self.saveImage()
+
+//        do {
+//            try context.save()
+//        } catch {
+//            print("Error saving project \(error)")
+//        }
+
+
+//
+//fileManager.createFile(atPath: imagePath as String, contents: data, attributes: nil)
+
+//    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+//
+//        var textField = UITextField()
+//
+//        let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
+//
+//        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+//
+//            let newItem = Item(context: self.context)
+//            newItem.title = textField.text!
+//            //newItem.done = false
+//            newItem.parentCategory = self.selectedCategory
+//            self.itemArray.append(newItem)
+//
+//            //self.defaults.set(self.itemArray, forKey: "ToDoListArray")
+//
+//            self.tableView.reloadData()
+//
+//        }
+//
+//        alert.addTextField { (alertTextField) in
+//            alertTextField.placeholder = "Create New Item"
+//            textField = alertTextField
+//
+//        }
+//
+//        alert.addAction(action)
+//
+//        present(alert, animated: true, completion: nil)
+//    }
+
+
+//        let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
+//        cell.textLabel?.text = project[indexPath.row].name
+
+
+//        { (success: Bool) in
+//            //self.captureImageView.removeFromSuperview()
+//
+//        }

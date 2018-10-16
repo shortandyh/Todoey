@@ -18,6 +18,8 @@
 		76DFAD73216E1F8A007922AF /* RoundedShadowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DFAD70216E1F8A007922AF /* RoundedShadowButton.swift */; };
 		76DFAD74216E1F8A007922AF /* RoundedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DFAD71216E1F8A007922AF /* RoundedImageView.swift */; };
 		76DFAD78216F245C007922AF /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DFAD77216F245C007922AF /* CameraViewController.swift */; };
+		76DFAD7A2170CC2F007922AF /* PhotosCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DFAD792170CC2F007922AF /* PhotosCollectionViewController.swift */; };
+		76DFAD7C2170FAC6007922AF /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DFAD7B2170FAC6007922AF /* PhotoCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		76DFAD70216E1F8A007922AF /* RoundedShadowButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedShadowButton.swift; sourceTree = "<group>"; };
 		76DFAD71216E1F8A007922AF /* RoundedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
 		76DFAD77216F245C007922AF /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		76DFAD792170CC2F007922AF /* PhotosCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewController.swift; sourceTree = "<group>"; };
+		76DFAD7B2170FAC6007922AF /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +94,7 @@
 				76DFAD47216D35D5007922AF /* CategoryViewController.swift */,
 				76DFAD20216A3AF6007922AF /* TodoListViewController.swift */,
 				76DFAD77216F245C007922AF /* CameraViewController.swift */,
+				76DFAD792170CC2F007922AF /* PhotosCollectionViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -100,6 +105,7 @@
 				76DFAD71216E1F8A007922AF /* RoundedImageView.swift */,
 				76DFAD70216E1F8A007922AF /* RoundedShadowButton.swift */,
 				76DFAD6F216E1F89007922AF /* RoundedShadowView.swift */,
+				76DFAD7B2170FAC6007922AF /* PhotoCell.swift */,
 				76DFAD22216A3AF6007922AF /* Main.storyboard */,
 			);
 			path = Views;
@@ -191,6 +197,8 @@
 				76DFAD6C216D368D007922AF /* DataModel.xcdatamodeld in Sources */,
 				76DFAD72216E1F8A007922AF /* RoundedShadowView.swift in Sources */,
 				76DFAD78216F245C007922AF /* CameraViewController.swift in Sources */,
+				76DFAD7C2170FAC6007922AF /* PhotoCell.swift in Sources */,
+				76DFAD7A2170CC2F007922AF /* PhotosCollectionViewController.swift in Sources */,
 				76DFAD21216A3AF6007922AF /* TodoListViewController.swift in Sources */,
 				76DFAD1F216A3AF6007922AF /* AppDelegate.swift in Sources */,
 			);

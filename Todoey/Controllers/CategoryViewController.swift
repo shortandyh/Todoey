@@ -44,12 +44,23 @@ class CategoryViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            self.context.delete(categories[indexPath.row])
+            categories.remove(at: indexPath.row)
+            
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            self.saveCategories()
+            
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "goToItems", sender: self)
+        performSegue(withIdentifier: "goToPhotos", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationVC = segue.destination as! TodoListViewController
+        let destinationVC = segue.destination as! PhotosCollectionViewController
         
         if let indexPath = tableView.indexPathForSelectedRow {
             destinationVC.selectedCategory = categories[indexPath.row]
