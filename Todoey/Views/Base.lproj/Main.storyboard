@@ -107,6 +107,9 @@
                             <outlet property="delegate" destination="bLg-ih-cKh" id="HBJ-u9-5lt"/>
                         </connections>
                     </collectionView>
+                    <connections>
+                        <outlet property="collectionView" destination="gDo-lg-ZPQ" id="Z7W-s3-NSb"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cjj-TO-8jU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

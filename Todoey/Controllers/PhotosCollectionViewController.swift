@@ -13,11 +13,13 @@ private let reuseIdentifier = "PhotosCell"
 
 class PhotosCollectionViewController: UICollectionViewController {
     
+    
+    
     var itemArray = [Item]()
     
-    let myCells = PhotoCell()
+//    let myCells = PhotoCell()
     
-    var selectedCategory : Category? {
+    public var selectedCategory : Category? {
         didSet{
             loadItems()
         }
@@ -38,10 +40,14 @@ class PhotosCollectionViewController: UICollectionViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "PhotosCell")
 
         // Do any additional setup after loading the view.
-        loadItems()
+//        loadItems()
+        
+        let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Item")
+        _ = NSBatchDeleteRequest(fetchRequest: fetch)
+        
     }
 
 //    override func didReceiveMemoryWarning() {
@@ -73,23 +79,45 @@ class PhotosCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? PhotoCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotosCell", for: indexPath) as? PhotoCell {
     
-        // Configure the cell
+        let polaroid = itemArray[indexPath.row]
+            cell.updateViews(item: polaroid)
+            return cell
+            
+        }
         
-        let item = itemArray[indexPath.row]
-            cell.updateViews(item: item)
+        return UICollectionViewCell()
+        
+        // Configure the cell
+//        let imageFromIndex = itemArray[indexPath.row].itemImage
+//        let titleForIndex = itemArray[indexPath.row].title
+//        let image: UIImage = UIImage(data: imageFromIndex! as Data)!
+//        cell.savedPhotoView.image = image
+//        cell.photoLabel.text = titleForIndex
+        
+        
+//        let image = UIImageJPEGRepresentation(imageFromIndex!, 1) as Data!
+//        let imageView = UIImageView(image: image)
+//        cell.addSubview(imageView)
+        
+//        working
+//        let item = itemArray[indexPath.row]
+//            cell.updateViews(item: item)
+        
+        
+        
 //        let image: UIImage = UIImage(data: item.itemImage! as Data)!
 //        myCells.savedPhotoView.image = image
 //        myCells.photoLabel.text = item.title
     
     
-        return cell
+//        return cell
             
-        }
+//        }
         
-        return PhotoCell()
-        
+//        return UICollectionViewCell()
+    
     }
 
     
@@ -129,31 +157,93 @@ class PhotosCollectionViewController: UICollectionViewController {
         collectionView?.reloadData()
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
-        
+
         let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
-        
+
         if let additionalPredicate = predicate {
             request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
         } else {
             request.predicate = categoryPredicate
         }
-        
-        //        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, predicate])
-        //
-        //        request.predicate = compoundPredicate
-        
-        
+
+//        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, predicate!])
+//        
+//                request.predicate = compoundPredicate
+
+
         do{
             itemArray = try context.fetch(request)
         } catch {
             print("Error loading categories \(error)")
         }
         
-        
-        collectionView?.reloadData()
-        
+        print(itemArray)
+
+//        self.collectionView?.reloadData()
+
+//        if let indexPath = collectionView?.indexPathsForSelectedItems {
+//            self.selectedCategory = itemArray[indexPath.]
+//        }
+//        let newPic = Item(context: self.context)
+//        let image = capturedImageView.image
+//        let data = UIImageJPEGRepresentation(image!, 1) as Data?
+//        newPic.itemImage = data
+//        newPic.title = projectName
+//        newPic.parentCategory = self.selectedProject
+//        //        newPic.parentProject = CameraSnappedVC.selectedProject
+//        self.itemArray.append(newPic)
+
+
+//        collectionView?.reloadData()
+
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()) {
+//
+//
+//        do{
+//            itemArray = try context.fetch(request)
+//        } catch {
+//            print("Error loading categories \(error)")
+//        }
+//
+//
+//    }
+    
+    
     
 //    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        return itemArray.count
@@ -222,22 +312,22 @@ class PhotosCollectionViewController: UICollectionViewController {
 extension PhotosCollectionViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         let request : NSFetchRequest<Item> = Item.fetchRequest()
-        
+
         let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
-        
+
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-        
+
         loadItems(with: request, predicate: predicate)
     }
-    
+
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text?.count == 0 {
             loadItems()
-            
+
             DispatchQueue.main.async {
                 searchBar.resignFirstResponder()
             }
         }
     }
-    
+
 }

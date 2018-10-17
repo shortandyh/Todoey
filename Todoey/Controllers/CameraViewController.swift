@@ -25,11 +25,12 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     var itemArray = [Item]()
     var PhotoVC: PhotosCollectionViewController = PhotosCollectionViewController()
     
-    var selectedProject : Category? {
-        didSet{
-            loadProjects()
-        }
-    }
+    var selectedProject : Category?
+//    {
+//        didSet{
+//            loadProjects()
+//        }
+//    }
     
     //MARK: - Constants
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -150,13 +151,29 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         clearBtn.isHidden = true
         
         let newPic = Item(context: self.context)
-        newPic.itemImage = photoData
-        newPic.title = projectName
-        newPic.parentCategory = PhotoVC.selectedCategory
+        let image = capturedImageView.image
+        let data = UIImageJPEGRepresentation(image!, 1) as Data?
+        newPic.itemImage = data
+        newPic.title = selectedProject?.name
+        newPic.parentCategory = selectedProject
+        print(selectedProject!.name!)
         //        newPic.parentProject = CameraSnappedVC.selectedProject
         self.itemArray.append(newPic)
         
-        saveImagesToContext()
+        do {
+            try context.save()
+        } catch {
+            print("Error saving project \(error)")
+        }
+        
+//        let newPic = Item(context: self.context)
+//        newPic.itemImage = photoData
+//        newPic.title = projectName
+//        newPic.parentCategory = PhotoVC.selectedCategory
+//        //        newPic.parentProject = CameraSnappedVC.selectedProject
+//        self.itemArray.append(newPic)
+        
+//        saveImage()
     }
     
 
@@ -180,19 +197,13 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     @objc func saveImage() {
         
 
-        if let indexPath = tableView.indexPathForSelectedRow {
-            self.selectedProject = categories[indexPath.row]
-        }
-        let newPic = Item(context: self.context)
-        let image = capturedImageView.image
-        let data = UIImageJPEGRepresentation(image!, 1) as Data?
-        newPic.itemImage = data
-        newPic.title = projectName
-        newPic.parentCategory = self.selectedProject
-        //        newPic.parentProject = CameraSnappedVC.selectedProject
-        self.itemArray.append(newPic)
+//        if let indexPath = tableView.indexPathForSelectedRow {
+//            let parentCat = categories[indexPath.row].name
+//        }
         
-        saveImagesToContext()
+        
+        
+//        saveImagesToContext()
         
 
         
@@ -295,11 +306,18 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //        let self.projectName = project[indexPath.row]
+//                let projectName = proj[indexPath.row]
         if let indexPath = tableView.indexPathForSelectedRow {
-            self.projectName = categories[indexPath.row].name
+            self.selectedProject = categories[indexPath.row]
+//            print(selectedProject!)
         }
     }
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        let destinationVC = segue.destination as! PhotosCollectionViewController
+//        
+//        
+//    }
     
     
 }
