@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import CoreData
+import SVProgressHUD
 
 class CameraViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate {
     
@@ -49,6 +50,9 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        SVProgressHUD.dismiss()
+        
 
         
         tableView.dataSource = self
