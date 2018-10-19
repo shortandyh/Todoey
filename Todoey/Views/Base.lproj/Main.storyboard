@@ -192,10 +192,10 @@
             </objects>
             <point key="canvasLocation" x="1923" y="400"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Custom Tab View Controller-->
         <scene sceneID="3WH-bm-AEL">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="kgh-6C-dGu" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="kgh-6C-dGu" customClass="CustomTabViewController" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="5NS-Zd-Uxa">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>

@@ -51,8 +51,8 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        SVProgressHUD.dismiss()
         
+//        SVProgressHUD.dismiss()
 
         
         tableView.dataSource = self
@@ -144,6 +144,8 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     }
     
     @IBAction func savePhotosToCategory(_ sender: Any) {
+        
+        
         horizPopUpConstraint.constant = 600
         UIView.animate(withDuration: 0.2, animations: {self.view.layoutIfNeeded()})
         self.capturedImageView.isHidden = true
@@ -166,6 +168,10 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         
         do {
             try context.save()
+            SVProgressHUD.setDefaultStyle(.dark)
+            SVProgressHUD.setDefaultMaskType(.gradient)
+            SVProgressHUD.showSuccess(withStatus: "Image Saved")
+            SVProgressHUD.dismiss(withDelay: 1)
         } catch {
             print("Error saving project \(error)")
         }
