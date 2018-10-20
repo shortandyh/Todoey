@@ -156,25 +156,36 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         thumbBtn.isHidden = true
         clearBtn.isHidden = true
         
-        let newPic = Item(context: self.context)
-        let image = capturedImageView.image
-        let data = UIImageJPEGRepresentation(image!, 1) as Data?
-        newPic.itemImage = data
-        newPic.title = selectedProject?.name
-        newPic.parentCategory = selectedProject
-        print(selectedProject!.name!)
-        //        newPic.parentProject = CameraSnappedVC.selectedProject
-        self.itemArray.append(newPic)
         
-        do {
-            try context.save()
-            SVProgressHUD.setDefaultStyle(.dark)
-            SVProgressHUD.setDefaultMaskType(.gradient)
-            SVProgressHUD.showSuccess(withStatus: "Image Saved")
-            SVProgressHUD.dismiss(withDelay: 1)
-        } catch {
-            print("Error saving project \(error)")
-        }
+        
+        //MARK: - Core Data
+        
+//        let newPic = Item(context: self.context)
+//        let image = capturedImageView.image
+//        let data = UIImageJPEGRepresentation(image!, 1) as Data?
+//        newPic.itemImage = data
+//        newPic.title = selectedProject?.name
+//        newPic.parentCategory = selectedProject
+//        print(selectedProject!.name!)
+//        //        newPic.parentProject = CameraSnappedVC.selectedProject
+//        self.itemArray.append(newPic)
+//        
+//        do {
+//            try context.save()
+//            SVProgressHUD.setDefaultStyle(.dark)
+//            SVProgressHUD.setDefaultMaskType(.gradient)
+//            SVProgressHUD.showSuccess(withStatus: "Image Saved")
+//            SVProgressHUD.dismiss(withDelay: 1)
+//        } catch {
+//            print("Error saving project \(error)")
+//        }
+//        
+        
+        
+        
+        
+        
+        
         
 //        let newPic = Item(context: self.context)
 //        newPic.itemImage = photoData
@@ -284,15 +295,28 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     
     func loadProjects() {
         
-        let request : NSFetchRequest<Category> = Category.fetchRequest()
         
-        do {
-            categories = try context.fetch(request)
-        } catch {
-            print("Error saving project \(error)")
-        }
         
-        tableView.reloadData()
+        
+        
+        
+        //MARK: - Core Data
+//        let request : NSFetchRequest<Category> = Category.fetchRequest()
+//
+//        do {
+//            categories = try context.fetch(request)
+//        } catch {
+//            print("Error saving project \(error)")
+//        }
+//
+//        tableView.reloadData()
+        
+        
+        
+        
+        
+        
+        
         
     }
     

@@ -15,7 +15,7 @@ class PhotoCell: UICollectionViewCell {
     
     
     func updateViews(item: Item) {
-        let image = UIImage(data: item.itemImage!)
+        let image = UIImage(data: item.itemImage)
         savedPhotoView.image = image
         photoLabel.text = item.title
         

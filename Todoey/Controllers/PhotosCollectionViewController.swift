@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 private let reuseIdentifier = "PhotosCell"
 
@@ -16,6 +16,7 @@ class PhotosCollectionViewController: UICollectionViewController {
     
     
     var itemArray = [Item]()
+    let realm = try! Realm()
     
 //    let myCells = PhotoCell()
     
@@ -31,7 +32,6 @@ class PhotosCollectionViewController: UICollectionViewController {
     
     //    let defaults = UserDefaults.standard
     
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -174,48 +174,48 @@ class PhotosCollectionViewController: UICollectionViewController {
     
     
     
-    
-    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
-
-        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
-
-        if let additionalPredicate = predicate {
-            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
-        } else {
-            request.predicate = categoryPredicate
-        }
-
-//        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, predicate!])
-//        
-//                request.predicate = compoundPredicate
-
-
-        do{
-            itemArray = try context.fetch(request)
-        } catch {
-            print("Error loading categories \(error)")
-        }
-        
-        print(itemArray)
-
-//        self.collectionView?.reloadData()
-
-//        if let indexPath = collectionView?.indexPathsForSelectedItems {
-//            self.selectedCategory = itemArray[indexPath.]
+    //MARK: - Core Data
+//    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
+//
+//        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
+//
+//        if let additionalPredicate = predicate {
+//            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
+//        } else {
+//            request.predicate = categoryPredicate
 //        }
-//        let newPic = Item(context: self.context)
-//        let image = capturedImageView.image
-//        let data = UIImageJPEGRepresentation(image!, 1) as Data?
-//        newPic.itemImage = data
-//        newPic.title = projectName
-//        newPic.parentCategory = self.selectedProject
-//        //        newPic.parentProject = CameraSnappedVC.selectedProject
-//        self.itemArray.append(newPic)
-
-
-//        collectionView?.reloadData()
-
-    }
+//
+////        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, predicate!])
+////
+////                request.predicate = compoundPredicate
+//
+//
+//        do{
+//            itemArray = try context.fetch(request)
+//        } catch {
+//            print("Error loading categories \(error)")
+//        }
+//
+//        print(itemArray)
+//
+////        self.collectionView?.reloadData()
+//
+////        if let indexPath = collectionView?.indexPathsForSelectedItems {
+////            self.selectedCategory = itemArray[indexPath.]
+////        }
+////        let newPic = Item(context: self.context)
+////        let image = capturedImageView.image
+////        let data = UIImageJPEGRepresentation(image!, 1) as Data?
+////        newPic.itemImage = data
+////        newPic.title = projectName
+////        newPic.parentCategory = self.selectedProject
+////        //        newPic.parentProject = CameraSnappedVC.selectedProject
+////        self.itemArray.append(newPic)
+//
+//
+////        collectionView?.reloadData()
+//
+//    }
     
     
     
@@ -309,25 +309,26 @@ class PhotosCollectionViewController: UICollectionViewController {
     
 }
 
-extension PhotosCollectionViewController: UISearchBarDelegate {
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        let request : NSFetchRequest<Item> = Item.fetchRequest()
-
-        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
-
-        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-
-        loadItems(with: request, predicate: predicate)
-    }
-
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchBar.text?.count == 0 {
-            loadItems()
-
-            DispatchQueue.main.async {
-                searchBar.resignFirstResponder()
-            }
-        }
-    }
-
-}
+// MARK: - Core Data
+//extension PhotosCollectionViewController: UISearchBarDelegate {
+//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+//        let request : NSFetchRequest<Item> = Item.fetchRequest()
+//
+//        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+//
+//        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+//
+//        loadItems(with: request, predicate: predicate)
+//    }
+//
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        if searchBar.text?.count == 0 {
+//            loadItems()
+//
+//            DispatchQueue.main.async {
+//                searchBar.resignFirstResponder()
+//            }
+//        }
+//    }
+//
+//}
