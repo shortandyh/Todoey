@@ -45,7 +45,7 @@ class CategoryViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
         
         cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added Yet"
-        
+        cell.textLabel?.font = UIFont(name: "Helvetica Neue Light", size: 18.0)
         return cell
     }
     

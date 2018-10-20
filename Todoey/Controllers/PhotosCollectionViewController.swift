@@ -15,12 +15,12 @@ class PhotosCollectionViewController: UICollectionViewController {
     
     
     
-    var itemArray = [Item]()
+    var todoItems: Results<Item>?
     let realm = try! Realm()
     
 //    let myCells = PhotoCell()
     
-    public var selectedCategory : Category? {
+     var selectedCategory : Category? {
         didSet{
             loadItems()
         }
@@ -45,8 +45,8 @@ class PhotosCollectionViewController: UICollectionViewController {
         // Do any additional setup after loading the view.
 //        loadItems()
         
-        let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Item")
-        _ = NSBatchDeleteRequest(fetchRequest: fetch)
+//        let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Item")
+//        _ = NSBatchDeleteRequest(fetchRequest: fetch)
         
     }
 
@@ -75,14 +75,14 @@ class PhotosCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return itemArray.count
+        return todoItems?.count ?? 1
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotosCell", for: indexPath) as? PhotoCell {
     
-        let polaroid = itemArray[indexPath.row]
-            cell.updateViews(item: polaroid)
+        let polaroid = todoItems?[indexPath.row]
+            cell.updateViews(item: polaroid!)
             return cell
             
         }
@@ -146,33 +146,54 @@ class PhotosCollectionViewController: UICollectionViewController {
 //
 //    }
     
-    func saveItems() {
-        
-        do {
-            try context.save()
-        } catch {
-            print("Error saving category \(error)")
-        }
-        
+//    func saveItems() {
+    
+//        do {
+//            try context.save()
+//        } catch {
+//            print("Error saving category \(error)")
+//        }
+//
+//        collectionView?.reloadData()
+//    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    func loadItems() {
+
+        todoItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
+
+//        self.collectionView?.reloadData()
+
+//        if let indexPath = collectionView?.indexPathsForSelectedItems {
+//            self.selectedCategory = itemArray[indexPath.]
+//        }
+//        let newPic = Item(context: self.context)
+//        let image = capturedImageView.image
+//        let data = UIImageJPEGRepresentation(image!, 1) as Data?
+//        newPic.itemImage = data
+//        newPic.title = projectName
+//        newPic.parentCategory = self.selectedProject
+//        //        newPic.parentProject = CameraSnappedVC.selectedProject
+//        self.itemArray.append(newPic)
+
+
         collectionView?.reloadData()
+
     }
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+}
     
     //MARK: - Core Data
 //    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
@@ -307,7 +328,7 @@ class PhotosCollectionViewController: UICollectionViewController {
     
     
     
-}
+//}
 
 // MARK: - Core Data
 //extension PhotosCollectionViewController: UISearchBarDelegate {

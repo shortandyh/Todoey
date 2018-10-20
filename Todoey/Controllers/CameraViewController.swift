@@ -8,7 +8,7 @@
 
 import UIKit
 import AVFoundation
-import CoreData
+import RealmSwift
 import SVProgressHUD
 
 class CameraViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate {
@@ -22,8 +22,8 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     var effect: UIVisualEffect!
     var projectName: String?
     
-    var categories = [Category]()
-    var itemArray = [Item]()
+    var categories: Results<Category>?
+    var todoItems: Results<Item>?
     var PhotoVC: PhotosCollectionViewController = PhotosCollectionViewController()
     
     var selectedProject : Category?
@@ -34,7 +34,8 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
 //    }
     
     //MARK: - Constants
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+//    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    let realm = try! Realm()
     
     @IBOutlet weak var capturedImageView: RoundedImageView!
     @IBOutlet weak var flippedTableView: RoundedImageView!
@@ -156,7 +157,35 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         thumbBtn.isHidden = true
         clearBtn.isHidden = true
         
+        if let currentCategory = self.selectedProject {
+            do {
+                try self.realm.write {
+                    let newPic = Item()
+                    let image = capturedImageView.image
+                    let data = UIImageJPEGRepresentation(image!, 1) as! Data
+                    newPic.itemImage = data
+                    newPic.title = selectedProject!.name
+                    currentCategory.items.append(newPic)
+                }
+            } catch {
+                print("Error Saving Image, \(error)")
+            }
+        }
         
+        tableView.reloadData()
+        
+//        print(selectedProject!.name)
+        //        newPic.parentProject = CameraSnappedVC.selectedProject
+//
+//        do {
+//            try context.save()
+//            SVProgressHUD.setDefaultStyle(.dark)
+//            SVProgressHUD.setDefaultMaskType(.gradient)
+//            SVProgressHUD.showSuccess(withStatus: "Image Saved")
+//            SVProgressHUD.dismiss(withDelay: 1)
+//        } catch {
+//            print("Error saving project \(error)")
+//        }
         
         //MARK: - Core Data
         
@@ -283,11 +312,11 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     }
     
     func saveImagesToContext() {
-        do {
-            try context.save()
-        } catch {
-            print("Error saving project \(error)")
-        }
+//        do {
+//            try context.save()
+//        } catch {
+//            print("Error saving project \(error)")
+//        }
         
 //        self.PhotoVC.collectionView?.reloadData()
         
@@ -326,12 +355,12 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
+        return categories?.count ?? 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "flippedProjectCell", for: indexPath)
-        cell.textLabel?.text = categories[indexPath.row].name
+        cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added Yet"
 
         cell.textLabel?.font = UIFont(name: "Helvetica Neue Light", size: 18.0)
         //cell.detailTextLabel?.text = ""
@@ -342,7 +371,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //                let projectName = proj[indexPath.row]
         if let indexPath = tableView.indexPathForSelectedRow {
-            self.selectedProject = categories[indexPath.row]
+            self.selectedProject = categories?[indexPath.row]
 //            print(selectedProject!)
         }
     }
