@@ -175,3 +175,234 @@
 //    
 //}
 //
+
+
+
+
+// Spare code
+
+//        let image = self.captureImageView.image
+//        let data = UIImageJPEGRepresentation(image!, 1) as NSData?
+
+//        let image = UIImage(data: photoData!)
+//        let data = UIImageJPEGRepresentation(image!, 1) as Data?
+
+
+//    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+//
+//        var textField = UITextField()
+//
+//        let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
+//
+//        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+//
+//            let newItem = Item(context: self.context)
+//            newItem.title = textField.text!
+//            //newItem.done = false
+//            newItem.parentCategory = self.selectedCategory
+//            self.itemArray.append(newItem)
+//
+//            //self.defaults.set(self.itemArray, forKey: "ToDoListArray")
+//
+//            self.tableView.reloadData()
+//
+//        }
+//
+//        alert.addTextField { (alertTextField) in
+//            alertTextField.placeholder = "Create New Item"
+//            textField = alertTextField
+//
+//        }
+//
+//        alert.addAction(action)
+//
+//        present(alert, animated: true, completion: nil)
+//    }
+
+//self.saveImage()
+
+//        do {
+//            try context.save()
+//        } catch {
+//            print("Error saving project \(error)")
+//        }
+
+
+//
+//fileManager.createFile(atPath: imagePath as String, contents: data, attributes: nil)
+
+//    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+//
+//        var textField = UITextField()
+//
+//        let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
+//
+//        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+//
+//            let newItem = Item(context: self.context)
+//            newItem.title = textField.text!
+//            //newItem.done = false
+//            newItem.parentCategory = self.selectedCategory
+//            self.itemArray.append(newItem)
+//
+//            //self.defaults.set(self.itemArray, forKey: "ToDoListArray")
+//
+//            self.tableView.reloadData()
+//
+//        }
+//
+//        alert.addTextField { (alertTextField) in
+//            alertTextField.placeholder = "Create New Item"
+//            textField = alertTextField
+//
+//        }
+//
+//        alert.addAction(action)
+//
+//        present(alert, animated: true, completion: nil)
+//    }
+
+
+//        let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
+//        cell.textLabel?.text = project[indexPath.row].name
+
+
+//        { (success: Bool) in
+//            //self.captureImageView.removeFromSuperview()
+//
+//        }
+
+
+//                    do {
+//
+//                        }
+//                    } catch {
+//                        print("Error Saving Image, \(error)")
+//                    }
+
+//                try self.realm.write {
+//                    let newPic = Item()
+//                    let image = capturedImageView.image
+//                    let data = UIImageJPEGRepresentation(image!, 1) as! Data
+//                    newPic.itemImage = data
+//                    newPic.title = selectedProject!.name
+//                    currentCategory.items.append(newPic)
+
+
+
+//        print(selectedProject!.name)
+//        newPic.parentProject = CameraSnappedVC.selectedProject
+//
+//        do {
+//            try context.save()
+//            SVProgressHUD.setDefaultStyle(.dark)
+//            SVProgressHUD.setDefaultMaskType(.gradient)
+//            SVProgressHUD.showSuccess(withStatus: "Image Saved")
+//            SVProgressHUD.dismiss(withDelay: 1)
+//        } catch {
+//            print("Error saving project \(error)")
+//        }
+
+//MARK: - Core Data
+
+//        let newPic = Item(context: self.context)
+//        let image = capturedImageView.image
+//        let data = UIImageJPEGRepresentation(image!, 1) as Data?
+//        newPic.itemImage = data
+//        newPic.title = selectedProject?.name
+//        newPic.parentCategory = selectedProject
+//        print(selectedProject!.name!)
+//        //        newPic.parentProject = CameraSnappedVC.selectedProject
+//        self.itemArray.append(newPic)
+//
+//        do {
+//            try context.save()
+//            SVProgressHUD.setDefaultStyle(.dark)
+//            SVProgressHUD.setDefaultMaskType(.gradient)
+//            SVProgressHUD.showSuccess(withStatus: "Image Saved")
+//            SVProgressHUD.dismiss(withDelay: 1)
+//        } catch {
+//            print("Error saving project \(error)")
+//        }
+//
+
+
+
+
+
+
+
+//        let newPic = Item(context: self.context)
+//        newPic.itemImage = photoData
+//        newPic.title = projectName
+//        newPic.parentCategory = PhotoVC.selectedCategory
+//        //        newPic.parentProject = CameraSnappedVC.selectedProject
+//        self.itemArray.append(newPic)
+
+//        saveImage()
+
+
+
+//        if let realm = try? Realm() {
+//            let category = Category()
+//            category.name = (selectedProject?.name)!
+//            for image in images {
+//                let item = Item(image: image)
+//                category.items.append(item)
+//                item.parentCategory = category
+//            }
+//        }
+
+//        if let chosenImage = self.capturedImageView.image {
+//            images.append(chosenImage)
+//        }
+
+//        let fileManager = FileManager.default
+//
+//        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+//        print("documentsURL: \(documentsURL)")
+//
+//        let documentPath = documentsURL.path
+//        print("documentPath: \(documentPath)")
+
+
+
+
+//        if let currentCategory = self.selectedProject {
+//
+//            let filePath = documentsURL.appendingPathComponent("\(String(describing: currentCategory))\(String(describing: imgNo)).png")
+//
+//            let image = capturedImageView.image
+//
+//            do {
+//                let files = try fileManager.contentsOfDirectory(atPath: "\(documentPath)")
+//
+//                for file in files {
+//
+//                    if "\(documentPath)/\(file)" == filePath.path {
+//                        imgNo += 1
+//                        if let pngImageData = UIImagePNGRepresentation(image!) {
+//                            try pngImageData.write(to: filePath, options: .atomic)
+//
+//                            if let realm = try? Realm(){
+//                                let category = Category()
+//                                category.name = currentCategory.name
+//                                for image in images {
+//                                    let item = Item(image: image)
+//                                    category.items.append(item)
+////                                    item.parentCategory = category
+//                                }
+//
+//                                try? realm.write {
+//                                    realm.add(category)
+//                                }
+//                                dismiss(animated: true, completion: nil)
+//                            }
+////                        try fileManager.removeItem(atPath: filePath.path)
+//                    }
+//                    }
+//                }
+//            } catch {
+//                print("Error Saving Image, \(error)")
+//            }
+//        }

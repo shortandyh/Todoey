@@ -17,7 +17,7 @@ class CategoryViewController: UITableViewController {
     
     var categories: Results<Category>?
     
-    var itemArray = [Item]()
+//    var itemArray = [Item]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,15 +44,32 @@ class CategoryViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
         
+        tableView.rowHeight = 90
         cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added Yet"
-        cell.textLabel?.font = UIFont(name: "Helvetica Neue Light", size: 18.0)
+        cell.textLabel?.font = UIFont(name: "HelveticaNeue-Thin", size: 34.0)
+        cell.textLabel?.textColor = #colorLiteral(red: 0.6456218274, green: 0.1673866657, blue: 0.002206729275, alpha: 1)
+        cell.textLabel?.textAlignment = .center
         return cell
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
+            
+            
+            if let category = categories?[indexPath.row] {
+                do {
+                    try realm.write {
+                        realm.delete(category)
+                        
+                    }
+                } catch {
+                    print("Error deleting table row, \(error)")
+                }
+            }
+            
+            tableView.reloadData()
 //            context.delete(categories[indexPath.row])
-//            categories.remove(at: indexPath.row)
+            
             
 //            tableView.deleteRows(at: [indexPath], with: .automatic)
 //            self.saveInRealm(category: <#T##Category#>)
@@ -69,7 +86,12 @@ class CategoryViewController: UITableViewController {
         
         if let indexPath = tableView.indexPathForSelectedRow {
             destinationVC.selectedCategory = categories?[indexPath.row]
+            print(destinationVC.selectedCategory?.name)
         }
+    }
+    
+    func deleteRow(category: Category) {
+        
     }
     
     func saveInRealm(category: Category) {

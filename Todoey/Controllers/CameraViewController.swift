@@ -10,6 +10,9 @@ import UIKit
 import AVFoundation
 import RealmSwift
 import SVProgressHUD
+import Photos
+import PhotosUI
+import Toucan
 
 class CameraViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate {
     
@@ -21,6 +24,8 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     var photoData: Data?
     var effect: UIVisualEffect!
     var projectName: String?
+    var imgNo = 1
+    var images : [UIImage] = []
     
     var categories: Results<Category>?
     var todoItems: Results<Item>?
@@ -75,7 +80,14 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         view.addSubview(capturedImageView)
         view.addSubview(flippedTableView)
         
-//        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+        let fileManager = FileManager.default
+        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        do {
+            let fileURLs = try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil)
+        } catch {
+            print("Error whileenumerating files \(documentsURL.path): \(error.localizedDescription)")
+        }
+        
         
         
     }
@@ -157,74 +169,47 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         thumbBtn.isHidden = true
         clearBtn.isHidden = true
         
+        
         if let currentCategory = self.selectedProject {
+            
             do {
-                try self.realm.write {
-                    let newPic = Item()
-                    let image = capturedImageView.image
-                    let data = UIImageJPEGRepresentation(image!, 1) as! Data
-                    newPic.itemImage = data
-                    newPic.title = selectedProject!.name
-                    currentCategory.items.append(newPic)
-                }
+                
+            try self.realm.write {
+//            if let realm = try? Realm() {
+            let image = self.capturedImageView.image
+            let item = Item(image: image!)
+            currentCategory.items.append(item)
+            
+//            try? realm.write {
+//                realm.add(item)
+            
+//            do {
+//                tryrealm.write {
+//                    let newItem = Item()
+//                    newItem.imageToURLString(image: self.capturedImageView.image!)
+////                    image = self.capturedImageView.image
+////                    newItem.imageToURLString(image: image)
+//////                    newItem.title = textField.text!
+////                    newItem.image
+////                    currentCategory.items.append(newItem)
+//                }
+//            } catch {
+//                print("Error saving new items, \(error)")
+//            }
+                
+              }
+           
+            
             } catch {
-                print("Error Saving Image, \(error)")
+                print("Error saving new items, \(error)")
             }
+            
         }
         
-        tableView.reloadData()
-        
-//        print(selectedProject!.name)
-        //        newPic.parentProject = CameraSnappedVC.selectedProject
-//
-//        do {
-//            try context.save()
-//            SVProgressHUD.setDefaultStyle(.dark)
-//            SVProgressHUD.setDefaultMaskType(.gradient)
-//            SVProgressHUD.showSuccess(withStatus: "Image Saved")
-//            SVProgressHUD.dismiss(withDelay: 1)
-//        } catch {
-//            print("Error saving project \(error)")
-//        }
-        
-        //MARK: - Core Data
-        
-//        let newPic = Item(context: self.context)
-//        let image = capturedImageView.image
-//        let data = UIImageJPEGRepresentation(image!, 1) as Data?
-//        newPic.itemImage = data
-//        newPic.title = selectedProject?.name
-//        newPic.parentCategory = selectedProject
-//        print(selectedProject!.name!)
-//        //        newPic.parentProject = CameraSnappedVC.selectedProject
-//        self.itemArray.append(newPic)
-//        
-//        do {
-//            try context.save()
-//            SVProgressHUD.setDefaultStyle(.dark)
-//            SVProgressHUD.setDefaultMaskType(.gradient)
-//            SVProgressHUD.showSuccess(withStatus: "Image Saved")
-//            SVProgressHUD.dismiss(withDelay: 1)
-//        } catch {
-//            print("Error saving project \(error)")
-//        }
-//        
-        
-        
-        
-        
-        
-        
-        
-//        let newPic = Item(context: self.context)
-//        newPic.itemImage = photoData
-//        newPic.title = projectName
-//        newPic.parentCategory = PhotoVC.selectedCategory
-//        //        newPic.parentProject = CameraSnappedVC.selectedProject
-//        self.itemArray.append(newPic)
-        
-//        saveImage()
+//        tableView.reloadData()
+
     }
+    
     
 
     @IBAction func clearedSave(_ sender: Any) {
@@ -327,7 +312,9 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         
         
         
+        categories = realm.objects(Category.self)
         
+        tableView.reloadData()
         
         //MARK: - Core Data
 //        let request : NSFetchRequest<Category> = Category.fetchRequest()
@@ -389,113 +376,39 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
 //MARK: - Extension
 extension CameraViewController: AVCapturePhotoCaptureDelegate {
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
-        if let error = error {
-            debugPrint(error)
-        } else {
-            photoData = photo.fileDataRepresentation()
-            
-            let image = UIImage(data: photoData!)
-            self.capturedImageView.image = image
-            //            captureImageView.isHidden = false
-            animateIn()
-            thumbBtn.isHidden = false
-            clearBtn.isHidden = false
-            horizPopUpConstraint.constant = -50
-            
-        }
         
+        
+        
+//        if photoData != nil {
+
+            if let error = error {
+                debugPrint(error)
+            } else {
+                photoData = photo.fileDataRepresentation()
+
+                let image = UIImage(data: photoData!)
+                self.capturedImageView.image = image
+                
+
+                //            captureImageView.isHidden = false
+                animateIn()
+                thumbBtn.isHidden = false
+                clearBtn.isHidden = false
+                horizPopUpConstraint.constant = -50
+
+            }
+//
+//
+//
+//        } else {
+
+//            guard error != nil else { print("Error capturing photo: \(error!)"); return }
+
+        
+            
+        //}
+    
     }
-    
-    
+
     
 }
-//        let image = self.captureImageView.image
-//        let data = UIImageJPEGRepresentation(image!, 1) as NSData?
-
-//        let image = UIImage(data: photoData!)
-//        let data = UIImageJPEGRepresentation(image!, 1) as Data?
-
-
-//    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-//
-//        var textField = UITextField()
-//
-//        let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
-//
-//        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
-//
-//            let newItem = Item(context: self.context)
-//            newItem.title = textField.text!
-//            //newItem.done = false
-//            newItem.parentCategory = self.selectedCategory
-//            self.itemArray.append(newItem)
-//
-//            //self.defaults.set(self.itemArray, forKey: "ToDoListArray")
-//
-//            self.tableView.reloadData()
-//
-//        }
-//
-//        alert.addTextField { (alertTextField) in
-//            alertTextField.placeholder = "Create New Item"
-//            textField = alertTextField
-//
-//        }
-//
-//        alert.addAction(action)
-//
-//        present(alert, animated: true, completion: nil)
-//    }
-
-//self.saveImage()
-
-//        do {
-//            try context.save()
-//        } catch {
-//            print("Error saving project \(error)")
-//        }
-
-
-//
-//fileManager.createFile(atPath: imagePath as String, contents: data, attributes: nil)
-
-//    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-//
-//        var textField = UITextField()
-//
-//        let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
-//
-//        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
-//
-//            let newItem = Item(context: self.context)
-//            newItem.title = textField.text!
-//            //newItem.done = false
-//            newItem.parentCategory = self.selectedCategory
-//            self.itemArray.append(newItem)
-//
-//            //self.defaults.set(self.itemArray, forKey: "ToDoListArray")
-//
-//            self.tableView.reloadData()
-//
-//        }
-//
-//        alert.addTextField { (alertTextField) in
-//            alertTextField.placeholder = "Create New Item"
-//            textField = alertTextField
-//
-//        }
-//
-//        alert.addAction(action)
-//
-//        present(alert, animated: true, completion: nil)
-//    }
-
-
-//        let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
-//        cell.textLabel?.text = project[indexPath.row].name
-
-
-//        { (success: Bool) in
-//            //self.captureImageView.removeFromSuperview()
-//
-//        }

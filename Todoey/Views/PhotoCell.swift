@@ -14,11 +14,11 @@ class PhotoCell: UICollectionViewCell {
     @IBOutlet weak var photoLabel: UILabel!
     
     
-    func updateViews(item: Item) {
-        let image = UIImage(data: item.itemImage)
-        savedPhotoView.image = image
-        photoLabel.text = item.title
-        
-    }
+//    func updateViews(item: Item) {
+//        
+//        savedPhotoView.image = item.itemImageURL
+//        photoLabel.text = item.title
+//        
+//    }
     
 }

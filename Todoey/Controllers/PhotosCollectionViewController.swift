@@ -9,9 +9,9 @@
 import UIKit
 import RealmSwift
 
-private let reuseIdentifier = "PhotosCell"
+private let reuseIdentifier = "photoCell"
 
-class PhotosCollectionViewController: UICollectionViewController {
+class PhotosCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     
     
@@ -22,7 +22,9 @@ class PhotosCollectionViewController: UICollectionViewController {
     
      var selectedCategory : Category? {
         didSet{
+//            getPictures()
             loadItems()
+            print(todoItems!)
         }
     }
     
@@ -39,31 +41,24 @@ class PhotosCollectionViewController: UICollectionViewController {
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
+        
+        
+        
         // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "PhotosCell")
+//        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "photoCell")
 
+        
+        
+        
         // Do any additional setup after loading the view.
 //        loadItems()
         
 //        let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Item")
 //        _ = NSBatchDeleteRequest(fetchRequest: fetch)
-        
+//        getPictures()
     }
 
-//    override func didReceiveMemoryWarning() {
-//        super.didReceiveMemoryWarning()
-//        // Dispose of any resources that can be recreated.
-//    }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     // MARK: UICollectionViewDataSource
 
@@ -76,48 +71,28 @@ class PhotosCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         return todoItems?.count ?? 1
+//        if let images = self.todoItems {
+//            return images.count
+//        }
+//        return 1
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotosCell", for: indexPath) as? PhotoCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as? PhotoCell {
+//        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as? PhotoCell {
     
-        let polaroid = todoItems?[indexPath.row]
-            cell.updateViews(item: polaroid!)
+//            return cell
+            
+            if let picture = todoItems?[indexPath.row] {
+                    cell.savedPhotoView.image = picture.thumbnailImage()
+                    cell.photoLabel.text = "Pic"
+            }
             return cell
             
         }
         
         return UICollectionViewCell()
-        
-        // Configure the cell
-//        let imageFromIndex = itemArray[indexPath.row].itemImage
-//        let titleForIndex = itemArray[indexPath.row].title
-//        let image: UIImage = UIImage(data: imageFromIndex! as Data)!
-//        cell.savedPhotoView.image = image
-//        cell.photoLabel.text = titleForIndex
-        
-        
-//        let image = UIImageJPEGRepresentation(imageFromIndex!, 1) as Data!
-//        let imageView = UIImageView(image: image)
-//        cell.addSubview(imageView)
-        
-//        working
-//        let item = itemArray[indexPath.row]
-//            cell.updateViews(item: item)
-        
-        
-        
-//        let image: UIImage = UIImage(data: item.itemImage! as Data)!
-//        myCells.savedPhotoView.image = image
-//        myCells.photoLabel.text = item.title
-    
-    
-//        return cell
-            
-//        }
-        
-//        return UICollectionViewCell()
-    
+
     }
 
     
@@ -159,7 +134,12 @@ class PhotosCollectionViewController: UICollectionViewController {
     
     
     
-    
+    func getPictures() {
+        if let realm = try? Realm() {
+            todoItems = realm.objects(Item.self)
+            collectionView?.reloadData()
+        }
+    }
     
     
     
@@ -171,6 +151,9 @@ class PhotosCollectionViewController: UICollectionViewController {
     func loadItems() {
 
         todoItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
+        
+//        todoItems = selectedCategory?.items
+//        .sorted(byKeyPath: "title", ascending: true)
 
 //        self.collectionView?.reloadData()
 
@@ -331,25 +314,54 @@ class PhotosCollectionViewController: UICollectionViewController {
 //}
 
 // MARK: - Core Data
-//extension PhotosCollectionViewController: UISearchBarDelegate {
-//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-//        let request : NSFetchRequest<Item> = Item.fetchRequest()
-//
-//        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
-//
-//        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-//
-//        loadItems(with: request, predicate: predicate)
-//    }
-//
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        if searchBar.text?.count == 0 {
-//            loadItems()
-//
-//            DispatchQueue.main.async {
-//                searchBar.resignFirstResponder()
-//            }
+extension PhotosCollectionViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        todoItems = todoItems?.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "dateCreated", ascending: true)
+        
+        collectionView?.reloadData()
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadItems()
+
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        }
+    }
+
+}
+
+}
+
+
+// Configure the cell
+//        let imageFromIndex = itemArray[indexPath.row].itemImage
+//        let titleForIndex = itemArray[indexPath.row].title
+//        let image: UIImage = UIImage(data: imageFromIndex! as Data)!
+//        cell.savedPhotoView.image = image
+//        cell.photoLabel.text = titleForIndex
+
+
+//        let image = UIImageJPEGRepresentation(imageFromIndex!, 1) as Data!
+//        let imageView = UIImageView(image: image)
+//        cell.addSubview(imageView)
+
+//        working
+//        let item = itemArray[indexPath.row]
+//            cell.updateViews(item: item)
+
+
+
+//        let image: UIImage = UIImage(data: item.itemImage! as Data)!
+//        myCells.savedPhotoView.image = image
+//        myCells.photoLabel.text = item.title
+
+
+//        return cell
+
 //        }
-//    }
-//
-//}
+
+//        return UICollectionViewCell()
