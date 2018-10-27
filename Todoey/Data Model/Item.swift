@@ -23,9 +23,13 @@ class Item: Object {
         let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         do {
             let fileURLs = try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil)
-            let fileCount = fileURLs.count
-            if fileCount != 0 {
-                imgNum = fileCount + 1
+            var fileCount = fileURLs.count
+            print(fileCount)
+            print(fileURLs)
+            if fileCount >= 1 {
+                fileCount += 1
+                imgNum = fileCount
+                print(imgNum)
             } else {
                 print("Nothing here")
             }
@@ -33,7 +37,7 @@ class Item: Object {
             print("Error whileenumerating files \(documentsURL.path): \(error.localizedDescription)")
         }
       
-        title = ("Pic\(imgNum)")
+        title = ("Pic \(imgNum)")
         itemImageURL = imageToURLString(image: image)
         if let smallImage = Toucan(image: image).resize(CGSize(width: 500, height: 500), fitMode: .scale).image{
             itemThumbImageURL = imageToURLString(image: smallImage)

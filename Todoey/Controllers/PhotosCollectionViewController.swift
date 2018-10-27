@@ -85,7 +85,7 @@ class PhotosCollectionViewController: UICollectionViewController, UICollectionVi
             
             if let picture = todoItems?[indexPath.row] {
                     cell.savedPhotoView.image = picture.thumbnailImage()
-                    cell.photoLabel.text = "Pic"
+                    cell.photoLabel.text = picture.title
             }
             return cell
             
