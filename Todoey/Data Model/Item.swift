@@ -54,8 +54,8 @@ class Item: Object {
     }
     
     func imageWithFilename(filename: String) -> UIImage {
-        let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        path.appendingPathComponent(filename)
+        var path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        path.appendPathComponent(filename)
         if let imageData = try? Data(contentsOf: path) {
             if let image = UIImage(data: imageData) {
                 return image
@@ -67,8 +67,8 @@ class Item: Object {
     func imageToURLString(image: UIImage) -> String {
         if let imageData = UIImagePNGRepresentation(image) {
             let fileName = UUID().uuidString + ".png"
-            let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            path.appendingPathComponent(fileName)
+            var path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            path.appendPathComponent(fileName)
             try? imageData.write(to: path)
             return fileName
         }
