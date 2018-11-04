@@ -58,6 +58,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         super.viewDidLoad()
         
         
+        
 //        SVProgressHUD.dismiss()
 
         
@@ -80,13 +81,13 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         view.addSubview(capturedImageView)
         view.addSubview(flippedTableView)
         
-        let fileManager = FileManager.default
-        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        do {
-            let fileURLs = try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil)
-        } catch {
-            print("Error whileenumerating files \(documentsURL.path): \(error.localizedDescription)")
-        }
+//        let fileManager = FileManager.default
+//        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+//        do {
+//            let fileURLs = try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil)
+//        } catch {
+//            print("Error whileenumerating files \(documentsURL.path): \(error.localizedDescription)")
+//        }
         
         
         
@@ -106,9 +107,6 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTapCameraView))
         tap.numberOfTapsRequired = 1
-        
-        
-        
         
         captureSession = AVCaptureSession()
         captureSession.sessionPreset = AVCaptureSession.Preset.hd1920x1080
@@ -136,6 +134,12 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
             }
         } catch {
             debugPrint(error)
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        if captureSession.isRunning == true {
+            captureSession.stopRunning()
         }
     }
     

@@ -39,7 +39,7 @@ class Item: Object {
       
         title = ("Pic \(imgNum)")
         itemImageURL = imageToURLString(image: image)
-        if let smallImage = Toucan(image: image).resize(CGSize(width: 500, height: 500), fitMode: .scale).image{
+        if let smallImage = Toucan(image: image).resize(CGSize(width: 500, height: 500), fitMode: .crop).image{
             itemThumbImageURL = imageToURLString(image: smallImage)
         }
         
