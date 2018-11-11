@@ -61,32 +61,32 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.8697718579" green="0.8697718579" blue="0.8697718579" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="0.64562182739999996" green="0.16738666569999999" blue="0.0022067292749999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="2" id="cYI-I7-xCx">
-                            <size key="itemSize" width="123" height="183"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="8" sectionInsetReference="safeArea" id="cYI-I7-xCx">
+                            <size key="itemSize" width="100" height="148"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="sectionInset" minX="20" minY="20" maxX="20" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="eEW-pb-3sF" customClass="PhotoCell" customModule="Todoey" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="123" height="183"/>
+                                <rect key="frame" x="20" y="20" width="100" height="148"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="123" height="183"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="100" height="148"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shpr.png" translatesAutoresizingMaskIntoConstraints="NO" id="jN4-In-DN5">
-                                            <rect key="frame" x="0.0" y="0.0" width="123" height="183"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shpr.png" translatesAutoresizingMaskIntoConstraints="NO" id="jN4-In-DN5" customClass="RoundedImageView" customModule="Todoey" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="148"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="nothing" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NNC-pD-gbq">
-                                            <rect key="frame" x="0.0" y="163" width="123" height="20"/>
+                                            <rect key="frame" x="0.0" y="128" width="100" height="20"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                 </view>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.8697718579" green="0.8697718579" blue="0.8697718579" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="NNC-pD-gbq" firstAttribute="leading" secondItem="eEW-pb-3sF" secondAttribute="leading" id="7Nc-cD-hOw"/>
                                     <constraint firstAttribute="trailing" secondItem="NNC-pD-gbq" secondAttribute="trailing" id="MRU-YB-1iO"/>
