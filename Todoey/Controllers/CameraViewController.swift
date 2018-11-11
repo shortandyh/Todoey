@@ -103,7 +103,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        
+        navigationController?.setNavigationBarHidden(true, animated: false)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTapCameraView))
         tap.numberOfTapsRequired = 1
@@ -246,6 +246,11 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         
 
         
+    }
+    
+    
+    @IBAction func segueToProjects(_ sender: Any) {
+        performSegue(withIdentifier: "camToPro", sender: self)
     }
     
     @objc func flip() {

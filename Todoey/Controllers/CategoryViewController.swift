@@ -24,6 +24,8 @@ class CategoryViewController: UITableViewController {
         
         SVProgressHUD.dismiss()
         loadCategories()
+        
+        navigationController?.setNavigationBarHidden(false, animated: false)
 
        
     }

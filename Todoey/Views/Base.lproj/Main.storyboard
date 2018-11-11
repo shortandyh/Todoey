@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kgh-6C-dGu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ocj-Gx-L92">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -114,7 +114,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cjj-TO-8jU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3712.8000000000002" y="399.85007496251876"/>
+            <point key="canvasLocation" x="3668" y="400"/>
         </scene>
         <!--Items-->
         <scene sceneID="66H-dH-nTQ">
@@ -186,31 +186,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="rxN-cm-RCx" kind="relationship" relationship="rootViewController" id="APh-fm-heb"/>
+                        <segue destination="bzE-u6-PVP" kind="relationship" relationship="rootViewController" id="wZS-dA-o0B"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OED-sQ-dEh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1923" y="400"/>
-        </scene>
-        <!--Swipeable Tab Bar Controller-->
-        <scene sceneID="3WH-bm-AEL">
-            <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="kgh-6C-dGu" customClass="SwipeableTabBarController" customModule="SwipeableTabBarController" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="5NS-Zd-Uxa">
-                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="bzE-u6-PVP" kind="relationship" relationship="viewControllers" id="JzW-OO-ZPZ"/>
-                        <segue destination="ocj-Gx-L92" kind="relationship" relationship="viewControllers" id="nZ8-dY-7tr"/>
-                    </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Jlk-64-TGj" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1923" y="-550"/>
+            <point key="canvasLocation" x="1143" y="400"/>
         </scene>
         <!--Camera-->
         <scene sceneID="Jju-qm-LBq">
@@ -228,7 +209,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Loaded by FirstViewController" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RTg-av-oZJ">
-                                <rect key="frame" x="90.5" y="363" width="194.5" height="17"/>
+                                <rect key="frame" x="90.5" y="346" width="194.5" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -261,11 +242,8 @@
                                 <blurEffect style="light"/>
                             </visualEffectView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GF2-TX-8Od" customClass="RoundedShadowButton" customModule="Todoey" customModuleProvider="target">
-                                <rect key="frame" x="57" y="552" width="261" height="50"/>
+                                <rect key="frame" x="57" y="538.5" width="261" height="43"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.3771136558" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="6Vg-N2-rjs"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="26"/>
                                 <state key="normal" title="Clear">
                                     <color key="titleColor" red="0.64562182739999996" green="0.16738666569999999" blue="0.0022067292749999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -372,6 +350,18 @@
                                     <constraint firstAttribute="height" constant="460" id="Xa2-dg-gzV"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AA9-1g-0Ba">
+                                <rect key="frame" x="167.5" y="612" width="40" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="ZWn-ut-uQX"/>
+                                    <constraint firstAttribute="height" constant="30" id="eDB-Fs-gJa"/>
+                                </constraints>
+                                <color key="tintColor" red="0.8697718579" green="0.8697718579" blue="0.8697718579" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="smackBurger"/>
+                                <connections>
+                                    <action selector="segueToProjects:" destination="bzE-u6-PVP" eventType="touchUpInside" id="deD-iD-3cA"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="xnH-3u-a6l" firstAttribute="centerY" secondItem="KTI-2W-N60" secondAttribute="centerY" constant="-50" id="8zG-ED-MdC"/>
@@ -379,8 +369,9 @@
                             <constraint firstAttribute="bottom" secondItem="9sW-GS-UGd" secondAttribute="bottom" id="Kj3-aB-94E"/>
                             <constraint firstItem="GF2-TX-8Od" firstAttribute="leading" relation="lessThanOrEqual" secondItem="1jF-Z8-ILL" secondAttribute="leading" constant="57" id="OSt-Yu-r8K"/>
                             <constraint firstItem="HhQ-LN-bw9" firstAttribute="centerX" secondItem="KTI-2W-N60" secondAttribute="centerX" id="QpA-fX-wPl"/>
-                            <constraint firstItem="GF2-TX-8Od" firstAttribute="bottom" secondItem="9sW-GS-UGd" secondAttribute="bottom" constant="-65" id="RCQ-n5-yT4"/>
                             <constraint firstItem="1jF-Z8-ILL" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="GF2-TX-8Od" secondAttribute="trailing" constant="58" id="WjS-e4-HVg"/>
+                            <constraint firstItem="AA9-1g-0Ba" firstAttribute="centerX" secondItem="KTI-2W-N60" secondAttribute="centerX" id="ZCQ-hd-QFJ"/>
+                            <constraint firstItem="GF2-TX-8Od" firstAttribute="top" secondItem="HhQ-LN-bw9" secondAttribute="bottom" constant="25" id="hr1-E8-vEU"/>
                             <constraint firstItem="9sW-GS-UGd" firstAttribute="trailing" secondItem="1jF-Z8-ILL" secondAttribute="trailing" id="lBP-vx-0pb"/>
                             <constraint firstItem="xnH-3u-a6l" firstAttribute="centerX" secondItem="KTI-2W-N60" secondAttribute="centerX" id="mIV-tG-hcq"/>
                             <constraint firstAttribute="centerX" secondItem="trc-mX-tkm" secondAttribute="centerX" id="mla-CU-8Cq"/>
@@ -388,6 +379,7 @@
                             <constraint firstItem="laS-WY-nqP" firstAttribute="centerX" secondItem="KTI-2W-N60" secondAttribute="centerX" id="o28-zT-cV4"/>
                             <constraint firstItem="GF2-TX-8Od" firstAttribute="centerX" secondItem="KTI-2W-N60" secondAttribute="centerX" id="oFH-ap-XLI"/>
                             <constraint firstItem="HhQ-LN-bw9" firstAttribute="centerY" secondItem="KTI-2W-N60" secondAttribute="centerY" constant="-50" id="vN5-Ec-g9K"/>
+                            <constraint firstAttribute="bottom" secondItem="AA9-1g-0Ba" secondAttribute="bottom" constant="25" id="vUf-d4-ga8"/>
                             <constraint firstItem="laS-WY-nqP" firstAttribute="centerY" secondItem="KTI-2W-N60" secondAttribute="centerY" constant="-50" id="xAn-Pz-6id"/>
                             <constraint firstItem="9sW-GS-UGd" firstAttribute="top" secondItem="KTI-2W-N60" secondAttribute="top" id="y3b-5s-hFK"/>
                         </constraints>
@@ -400,6 +392,7 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </tabBarItem>
+                    <navigationItem key="navigationItem" id="HXr-yg-a9h"/>
                     <connections>
                         <outlet property="cameraView" destination="9sW-GS-UGd" id="WwB-Wm-Ijb"/>
                         <outlet property="capturedImageView" destination="HhQ-LN-bw9" id="ObQ-qO-WdQ"/>
@@ -409,15 +402,17 @@
                         <outlet property="tableView" destination="eba-pb-Z9H" id="qA5-Cl-O1h"/>
                         <outlet property="thumbBtn" destination="laS-WY-nqP" id="bHV-H8-GIu"/>
                         <outlet property="visualEffectedView" destination="znJ-l8-nQU" id="mah-9G-iCP"/>
+                        <segue destination="rxN-cm-RCx" kind="show" identifier="camToPro" id="3OF-LS-dS6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Obx-rH-SBQ" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2822" y="-550"/>
+            <point key="canvasLocation" x="1986" y="400"/>
         </scene>
     </scenes>
     <resources>
         <image name="first" width="16" height="16"/>
         <image name="shpr.png" width="180" height="180"/>
+        <image name="smackBurger" width="40" height="40"/>
     </resources>
 </document>
