@@ -88,7 +88,7 @@ class CategoryViewController: UITableViewController {
         
         if let indexPath = tableView.indexPathForSelectedRow {
             destinationVC.selectedCategory = categories?[indexPath.row]
-            print(destinationVC.selectedCategory?.name)
+//            print(destinationVC.selectedCategory?.name)
         }
     }
     

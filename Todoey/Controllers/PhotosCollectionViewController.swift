@@ -8,12 +8,15 @@
 
 import UIKit
 import RealmSwift
+import Hero
 
 private let reuseIdentifier = "photoCell"
 
 class PhotosCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    
+    @IBOutlet var infoView: UIView!
+    @IBOutlet weak var infoImage: UIImageView!
+    @IBOutlet weak var infoNameLabel: UILabel!
     
     var todoItems: Results<Item>?
     let realm = try! Realm()
@@ -28,13 +31,8 @@ class PhotosCollectionViewController: UICollectionViewController, UICollectionVi
         }
     }
     
-
-
-    
-    
     //    let defaults = UserDefaults.standard
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -83,9 +81,13 @@ class PhotosCollectionViewController: UICollectionViewController, UICollectionVi
     
 //            return cell
             
+            
             if let picture = todoItems?[indexPath.row] {
                     cell.savedPhotoView.image = picture.thumbnailImage()
                     cell.photoLabel.text = picture.title
+                    cell.photoLabel.isHidden = true
+                    cell.savedPhotoView.hero.id = picture.title
+                
             }
             return cell
             
@@ -94,6 +96,63 @@ class PhotosCollectionViewController: UICollectionViewController, UICollectionVi
         return UICollectionViewCell()
 
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let item = todoItems?[indexPath.row]
+        {
+        performSegue(withIdentifier: "toFullImage", sender: item)
+//            collectionView.hero.modifiers = [.duration(0.8)]
+        }
+        
+        
+        
+//  block for displaying subview
+        
+//        infoImage.image = item?.fullImage()
+//        infoNameLabel.text = item?.title
+//        infoView.center = view.center
+//        
+//        view.addSubview(infoView)
+//        
+//        infoView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+//        
+//        UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0.5, options: [], animations: {
+//            self.collectionView?.alpha = 0.5
+//            self.infoView.transform = .identity
+//        })
+//        
+//        navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        
+        
+        
+        
+        
+        
+        
+
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let item = sender as? Item {
+            if let destinationVC = segue.destination as? ImageViewController {
+                destinationVC.todoItems = item
+            }
+
+        }
+        
+    }
+//
+////        if let indexPath = collectionView?.indexPathsForSelectedItems {
+////            if let picture = todoItems?[indexPath] {
+////                destinationVC.fullImage.image = picture.thumbnailImage()
+////                cell.photoLabel.text = picture.title
+////                cell.photoLabel.isHidden = true
+////            }
+////            destinationVC.fullImage.image =
+//////            print(destinationVC.selectedCategory?.name)
+////        }
+//    }
 
     
     
@@ -139,6 +198,33 @@ class PhotosCollectionViewController: UICollectionViewController, UICollectionVi
             todoItems = realm.objects(Item.self)
             collectionView?.reloadData()
         }
+    }
+    
+    @IBAction func closeInfoPopup(_ sender: RoundButtonView) {
+        
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            self.infoView.transform = CGAffineTransform.init(scaleX: 1.3, y:1.3)
+            self.infoView.alpha = 0
+            self.collectionView?.alpha = 1
+            self.infoView.removeFromSuperview()
+//            self.infoView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+//            self.infoView.transform = .identity
+//            self.visualEffectedView.effect = nil
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
+                self.infoView.alpha = 1
+
+            }
+            
+        })
+        
+
+        
+//        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0, options: [], animations: {
+//            self.collectionView?.alpha = 1
+//            self.infoView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+
     }
     
     
