@@ -13,8 +13,9 @@ import SVProgressHUD
 import Photos
 import PhotosUI
 import Toucan
+import LocalAuthentication
 
-class CameraViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate {
+class CameraViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIApplicationDelegate {
     
     //MARK: - Variables
     var captureSession: AVCaptureSession!
@@ -57,7 +58,8 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+//        locTouchId()
+
         
 //        SVProgressHUD.dismiss()
 
@@ -96,12 +98,13 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         previewLayer.frame = cameraView.bounds
-        
+        locTouchId()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         
         navigationController?.setNavigationBarHidden(true, animated: false)
         
@@ -344,6 +347,24 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         
         
     }
+    
+    func locTouchId() {
+        let context: LAContext = LAContext()
+        
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil){
+            context.evaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, localizedReason: "Stick your finger on it!") { (wasSuccessful, error) in
+                if wasSuccessful {
+                    print ("was a success")
+                } else {
+                    print ("you are not logged in")
+                }
+            }
+        }
+    }
+    
+//    func applicationDidBecomeActive(_ application: UIApplication) {
+//        locTouchId()
+//    }
     
     //MARK: - TableView setup
     func numberOfSections(in tableView: UITableView) -> Int {
