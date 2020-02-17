@@ -47,6 +47,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     @IBOutlet weak var flippedTableView: RoundedImageView!
     @IBOutlet weak var clearBtn: RoundedShadowButton!
     @IBOutlet weak var thumbBtn: RoundedShadowButton!
+    @IBOutlet weak var gradientBar: UIView!
     
     @IBOutlet weak var visualEffectedView: UIVisualEffectView!
     @IBOutlet weak var cameraView: UIView!
@@ -62,6 +63,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
 
         
 //        SVProgressHUD.dismiss()
+        gradientBar.setGradientBackground()
 
         
         tableView.dataSource = self
@@ -98,13 +100,12 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         previewLayer.frame = cameraView.bounds
-        locTouchId()
+//        locTouchId()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         
         navigationController?.setNavigationBarHidden(true, animated: false)
         
@@ -237,24 +238,12 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     
     //MARK: - Objective C Functions
     @objc func saveImage() {
-        
-
 //        if let indexPath = tableView.indexPathForSelectedRow {
 //            let parentCat = categories[indexPath.row].name
 //        }
-        
-        
-        
 //        saveImagesToContext()
-        
-
-        
     }
     
-    
-    @IBAction func segueToProjects(_ sender: Any) {
-        performSegue(withIdentifier: "camToPro", sender: self)
-    }
     
     @objc func flip() {
         let transitionOptions: UIViewAnimationOptions = [.transitionFlipFromRight, .showHideTransitionViews]
@@ -266,7 +255,9 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         UIView.transition(with: flippedTableView, duration: 0.3, options: transitionOptions, animations: {
             self.flippedTableView.isHidden = false
         }, completion: nil)
+        
     }
+    
     
     @objc func flipBack() {
         let transitionOptions: UIViewAnimationOptions = [.transitionFlipFromLeft, .showHideTransitionViews]
@@ -279,11 +270,15 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
             self.capturedImageView.isHidden = false
         }, completion: nil)
         
-        
     }
     
     
     //MARK: - Functions
+    
+    @IBAction func segueToProjects(_ sender: Any) {
+        performSegue(withIdentifier: "camToPro", sender: self)
+    }
+
     func animateIn() {
         //self.view.addSubview(captureImageView)
         self.capturedImageView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
@@ -298,12 +293,12 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         
     }
     
+    
     func animateOut() {
         UIView.animate(withDuration: 0.2, animations: {
             self.capturedImageView.transform = CGAffineTransform.init(scaleX: 1.3, y:1.3)
             self.capturedImageView.alpha = 0
             self.visualEffectedView.effect = nil
-            
         })
 
     }
@@ -320,12 +315,8 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     }
     
     func loadProjects() {
-        
-        
-        
-        
+
         categories = realm.objects(Category.self)
-        
         tableView.reloadData()
         
         //MARK: - Core Data
@@ -338,13 +329,6 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
 //        }
 //
 //        tableView.reloadData()
-        
-        
-        
-        
-        
-        
-        
         
     }
     
@@ -398,16 +382,12 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
 //        
 //        
 //    }
-    
-    
 }
 
 
 //MARK: - Extension
 extension CameraViewController: AVCapturePhotoCaptureDelegate {
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
-        
-        
         
 //        if photoData != nil {
 
@@ -418,8 +398,6 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
 
                 let image = UIImage(data: photoData!)
                 self.capturedImageView.image = image
-                
-
                 //            captureImageView.isHidden = false
                 animateIn()
                 thumbBtn.isHidden = false
@@ -427,18 +405,10 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
                 horizPopUpConstraint.constant = -50
 
             }
-//
-//
-//
 //        } else {
-
 //            guard error != nil else { print("Error capturing photo: \(error!)"); return }
-
-        
-            
         //}
     
     }
-
     
 }

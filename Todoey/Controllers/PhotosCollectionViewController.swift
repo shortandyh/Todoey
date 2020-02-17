@@ -263,6 +263,8 @@ class PhotosCollectionViewController: UICollectionViewController, UICollectionVi
     
     
 }
+
+
     
     //MARK: - Core Data
 //    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
