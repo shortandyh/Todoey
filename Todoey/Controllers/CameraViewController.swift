@@ -31,6 +31,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     var categories: Results<Category>?
     var todoItems: Results<Item>?
     var PhotoVC: PhotosCollectionViewController = PhotosCollectionViewController()
+    private var swipeGestureRecognizer: UISwipeGestureRecognizer?
     
     var selectedProject : Category?
 //    {
@@ -48,6 +49,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     @IBOutlet weak var clearBtn: RoundedShadowButton!
     @IBOutlet weak var thumbBtn: RoundedShadowButton!
     @IBOutlet weak var gradientBar: UIView!
+    @IBOutlet weak var gradientBarBottom: NSLayoutConstraint!
     
     @IBOutlet weak var visualEffectedView: UIVisualEffectView!
     @IBOutlet weak var cameraView: UIView!
@@ -59,11 +61,18 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.barTintColor = UIColor.darkGray
+        
+////        swipeGestureRecognizer = UISwipeGestureRecognizer
+//        swipeGestureRecognizer = MySwipeGestureRecognizer(target: self, swipeLeftSegue: "yourSwipeLeftSegue", swipeRightSeque: "yourSwipeRightSegue")
+//        view.addGestureRecognizer(swipeGestureRecognizer!)
+        
 //        locTouchId()
 
         
 //        SVProgressHUD.dismiss()
         gradientBar.setGradientBackground()
+        gradientBarBottom.constant = -120
 
         
         tableView.dataSource = self
@@ -99,6 +108,8 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        
         previewLayer.frame = cameraView.bounds
 //        locTouchId()
         
@@ -150,17 +161,19 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     @IBAction func showPopUp(_ sender: Any) {
         perform(#selector(flip), with: nil, afterDelay: 0)
         loadProjects()
-        clearBtn.isHidden = true
+//        clearBtn.isHidden = true
     }
     
     @IBAction func ClearBttn(_ sender: Any) {
         animateOut()
+        animateDown(duration: 0.3)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
             //self.flipTableView.isHidden = true
             self.visualEffectedView.isHidden = true
             self.capturedImageView.isHidden = true
+            self.flippedTableView.isHidden = true
             self.thumbBtn.isHidden = true
-            self.clearBtn.isHidden = true
+            self.clearBtn.isHidden = false
         }
     }
     
@@ -175,7 +188,8 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         }
         visualEffectedView.isHidden = true
         thumbBtn.isHidden = true
-        clearBtn.isHidden = true
+//        clearBtn.isHidden = true
+        animateDown(duration: 0.9)
         
         
         if let currentCategory = self.selectedProject {
@@ -221,9 +235,11 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     
 
     @IBAction func clearedSave(_ sender: Any) {
+        
         perform(#selector(flipBack), with: nil, afterDelay: 0)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
             self.clearBtn.isHidden = false
+            
         }
     }
     
@@ -233,6 +249,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         let settings = AVCapturePhotoSettings()
         settings.previewPhotoFormat = settings.embeddedThumbnailPhotoFormat
         cameraOutput.capturePhoto(with: settings, delegate: self)
+//        animateUp()
     }
     
     
@@ -278,6 +295,20 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     @IBAction func segueToProjects(_ sender: Any) {
         performSegue(withIdentifier: "camToPro", sender: self)
     }
+    
+
+    
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        swipeGestureRecognizer = MySwipeGestureRecognizer(target: self, swipeLeftSegue: "yourSwipeLeftSegue", swipeRightSeque: "yourSwipeRightSegue")
+//        view.addGestureRecognizer(swipeGestureRecognizer!)
+//    }
+    
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if segue.identifier == "camToPro" {
+//            //your code goes here
+//        }
+//    }
 
     func animateIn() {
         //self.view.addSubview(captureImageView)
@@ -290,6 +321,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
             self.capturedImageView.alpha = 1
             self.capturedImageView.transform = CGAffineTransform.identity
         }
+        animateUp()
         
     }
     
@@ -301,6 +333,20 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
             self.visualEffectedView.effect = nil
         })
 
+    }
+    
+    func animateUp() {
+        gradientBarBottom.constant = 0
+        UIView.animate(withDuration: 0.5, animations: {
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    func animateDown(duration: Double) {
+        gradientBarBottom.constant = -120
+        UIView.animate(withDuration: duration, animations: {
+            self.view.layoutIfNeeded()
+        })
     }
     
     func saveImagesToContext() {

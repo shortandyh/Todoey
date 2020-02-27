@@ -14,7 +14,7 @@ class RoundedImageView: UIImageView {
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowRadius = 50
         self.layer.shadowOpacity = 1
-        self.layer.cornerRadius = self.layer.frame.height / 24
+        self.layer.cornerRadius = self.layer.frame.height / 48
         self.clipsToBounds = true
     }
 
