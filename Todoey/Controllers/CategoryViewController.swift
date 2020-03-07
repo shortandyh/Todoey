@@ -11,20 +11,33 @@ import RealmSwift
 import SVProgressHUD
 
 
-class CategoryViewController: UITableViewController {
+class CategoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     let realm = try! Realm()
     
     var categories: Results<Category>?
     
-//    var itemArray = [Item]()
+    @IBOutlet weak var tableView: RoundedTableView!
+    @IBOutlet weak var menuBtn: UIButton!
+    //    var itemArray = [Item]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor?.withAlphaComponent
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        menuBtn.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
+        
+//        revealViewController().frontViewController.view.isOpaque = true
+        self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
+        
         SVProgressHUD.dismiss()
         loadCategories()
-        
+       
         navigationController?.setNavigationBarHidden(false, animated: false)
 
        
@@ -38,12 +51,12 @@ class CategoryViewController: UITableViewController {
 //        return 0
 //    }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return categories?.count ?? 1
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
         
         tableView.rowHeight = 90
@@ -54,7 +67,7 @@ class CategoryViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             
             
@@ -79,7 +92,7 @@ class CategoryViewController: UITableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "goToPhotos", sender: self)
     }
     

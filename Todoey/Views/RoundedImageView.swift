@@ -19,3 +19,13 @@ class RoundedImageView: UIImageView {
     }
 
 }
+
+class RoundedTableView: UITableView {
+    override func awakeFromNib() {
+//        self.layer.shadowColor = UIColor.black.cgColor
+//        self.layer.shadowRadius = 50
+//        self.layer.shadowOpacity = 1
+        self.layer.cornerRadius = self.layer.frame.height / 48
+        self.clipsToBounds = true
+    }
+}

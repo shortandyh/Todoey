@@ -61,6 +61,9 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.revealViewController()?.rearViewRevealWidth = self.view.frame.width - 8
+        
+        
         navigationController?.navigationBar.barTintColor = UIColor.darkGray
         
 ////        swipeGestureRecognizer = UISwipeGestureRecognizer

@@ -629,7 +629,7 @@ const int FrontViewPositionNone = 0xff;
 
 - (void)_initDefaultProperties
 {
-    _frontViewPosition = FrontViewPositionLeft;
+    _frontViewPosition = FrontViewPositionRight;
     _rearViewPosition = FrontViewPositionLeft;
     _rightViewPosition = FrontViewPositionLeft;
     _rearViewRevealWidth = 260.0f;
