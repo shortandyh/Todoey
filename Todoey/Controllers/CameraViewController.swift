@@ -61,7 +61,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.revealViewController()?.rearViewRevealWidth = self.view.frame.width - 8
+//        self.revealViewController()?.rearViewRevealWidth = self.view.frame.width - 8
         
         
         navigationController?.navigationBar.barTintColor = UIColor.darkGray
@@ -431,11 +431,44 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
 //        
 //        
 //    }
+    
+    
+    var interactor: Interactor? = nil
+    
+    @IBAction func handleGesture(sender: UIPanGestureRecognizer) {
+        
+        let translation = sender.translation(in: view)
+        
+        let progress = MenuHelper.calculateProgress(translationInView: translation, viewBounds: view.bounds, direction: .Left)
+        
+        MenuHelper.mapGestureStateToInteractor(
+            gestureState: sender.state,
+            progress: progress,
+            interactor: interactor) {
+                self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    
+    
+    @IBAction func closeButton(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+
 }
+
+
+
+
+
+
 
 
 //MARK: - Extension
 extension CameraViewController: AVCapturePhotoCaptureDelegate {
+    
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         
 //        if photoData != nil {

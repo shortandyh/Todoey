@@ -24,21 +24,21 @@ class CategoryViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor?.withAlphaComponent
+        self.view.backgroundColor?.withAlphaComponent(0.5)
         
         tableView.dataSource = self
         tableView.delegate = self
-        
-        menuBtn.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
+//
+//        menuBtn.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
         
 //        revealViewController().frontViewController.view.isOpaque = true
-        self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
+//        self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+//        self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
         
         SVProgressHUD.dismiss()
         loadCategories()
        
-        navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.setNavigationBarHidden(true, animated: false)
 
        
     }
@@ -97,11 +97,16 @@ class CategoryViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationVC = segue.destination as! PhotosCollectionViewController
+        if let destinationVC = segue.destination as? PhotosCollectionViewController {
         
         if let indexPath = tableView.indexPathForSelectedRow {
             destinationVC.selectedCategory = categories?[indexPath.row]
 //            print(destinationVC.selectedCategory?.name)
+        }
+        }
+        if let destinationViewController = segue.destination as? CameraViewController {
+            destinationViewController.transitioningDelegate = self
+            destinationViewController.interactor = interactor
         }
     }
     
@@ -187,5 +192,44 @@ class CategoryViewController: UIViewController, UITableViewDataSource, UITableVi
         
         present(alert, animated: true, completion: nil)
         
+    }
+    
+    let interactor = Interactor()
+    
+    @IBAction func openMenu(_ sender: Any) {
+        performSegue(withIdentifier: "openMenu", sender: nil)
+    }
+    
+    @IBAction func edgePanGesture(sender: UIScreenEdgePanGestureRecognizer) {
+        let translation = sender.translation(in: view)
+        
+        let progress = MenuHelper.calculateProgress(translationInView: translation, viewBounds: view.bounds, direction: .Right)
+        MenuHelper.mapGestureStateToInteractor(gestureState: sender.state, progress: progress, interactor: interactor){
+            self.performSegue(withIdentifier: "openMenu", sender: nil)
+        }
+    }
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//
+//    }
+
+}
+
+extension CategoryViewController: UIViewControllerTransitioningDelegate {
+    
+        func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+            return PresentMenuAnimator()
+        }
+    
+        func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+            return DismissMenuAnimator()
+        }
+    
+        func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+            return interactor.hasStarted ? interactor : nil
+        }
+    
+        func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+            return interactor.hasStarted ? interactor : nil
     }
 }

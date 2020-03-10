@@ -40,7 +40,7 @@ class PhotosCollectionViewController: UICollectionViewController, UICollectionVi
         // self.clearsSelectionOnViewWillAppear = false
 
         
-        
+        navigationController?.setNavigationBarHidden(false, animated: false)
         
         // Register cell classes
 //        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "photoCell")
