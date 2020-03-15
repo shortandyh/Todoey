@@ -104,10 +104,10 @@ class CategoryViewController: UIViewController, UITableViewDataSource, UITableVi
 //            print(destinationVC.selectedCategory?.name)
         }
         }
-        if let destinationViewController = segue.destination as? CameraViewController {
-            destinationViewController.transitioningDelegate = self
-            destinationViewController.interactor = interactor
-        }
+//        if let destinationViewController = segue.destination as? CameraViewController {
+//            destinationViewController.transitioningDelegate = self
+//            destinationViewController.interactor = interactor
+//        }
     }
     
     func deleteRow(category: Category) {
@@ -194,20 +194,20 @@ class CategoryViewController: UIViewController, UITableViewDataSource, UITableVi
         
     }
     
-    let interactor = Interactor()
-    
-    @IBAction func openMenu(_ sender: Any) {
-        performSegue(withIdentifier: "openMenu", sender: nil)
-    }
-    
-    @IBAction func edgePanGesture(sender: UIScreenEdgePanGestureRecognizer) {
-        let translation = sender.translation(in: view)
-        
-        let progress = MenuHelper.calculateProgress(translationInView: translation, viewBounds: view.bounds, direction: .Right)
-        MenuHelper.mapGestureStateToInteractor(gestureState: sender.state, progress: progress, interactor: interactor){
-            self.performSegue(withIdentifier: "openMenu", sender: nil)
-        }
-    }
+//    let interactor = Interactor()
+//
+//    @IBAction func openMenu(_ sender: Any) {
+//        performSegue(withIdentifier: "openMenu", sender: nil)
+//    }
+//
+//    @IBAction func edgePanGesture(sender: UIScreenEdgePanGestureRecognizer) {
+//        let translation = sender.translation(in: view)
+//
+//        let progress = MenuHelper.calculateProgress(translationInView: translation, viewBounds: view.bounds, direction: .Right)
+//        MenuHelper.mapGestureStateToInteractor(gestureState: sender.state, progress: progress, interactor: interactor){
+//            self.performSegue(withIdentifier: "openMenu", sender: nil)
+//        }
+//    }
     
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 //
@@ -217,19 +217,19 @@ class CategoryViewController: UIViewController, UITableViewDataSource, UITableVi
 
 extension CategoryViewController: UIViewControllerTransitioningDelegate {
     
-        func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-            return PresentMenuAnimator()
-        }
-    
-        func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-            return DismissMenuAnimator()
-        }
-    
-        func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-            return interactor.hasStarted ? interactor : nil
-        }
-    
-        func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-            return interactor.hasStarted ? interactor : nil
-    }
+//        func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//            return PresentMenuAnimator()
+//        }
+//
+//        func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//            return DismissMenuAnimator()
+//        }
+//
+//        func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+//            return interactor.hasStarted ? interactor : nil
+//        }
+//
+//        func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+//            return interactor.hasStarted ? interactor : nil
+//    }
 }

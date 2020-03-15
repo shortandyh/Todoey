@@ -13,7 +13,7 @@ import SVProgressHUD
 import Photos
 import PhotosUI
 import Toucan
-import LocalAuthentication
+//import LocalAuthentication
 
 class CameraViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIApplicationDelegate {
     
@@ -24,6 +24,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     var imagePickerController: UIImagePickerController!
     var photoData: Data?
     var effect: UIVisualEffect!
+    var mainEffect: UIVisualEffect!
     var projectName: String?
     var imgNo = 1
     var images : [UIImage] = []
@@ -32,6 +33,8 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     var todoItems: Results<Item>?
     var PhotoVC: PhotosCollectionViewController = PhotosCollectionViewController()
     private var swipeGestureRecognizer: UISwipeGestureRecognizer?
+//    var screenEdgeRecognizer: UIScreenEdgePanGestureRecognizer!
+    var currentViewPosition: CGFloat = 0.0
     
     var selectedProject : Category?
 //    {
@@ -52,19 +55,29 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     @IBOutlet weak var gradientBarBottom: NSLayoutConstraint!
     
     @IBOutlet weak var visualEffectedView: UIVisualEffectView!
+    @IBOutlet weak var mainTableBlur: UIVisualEffectView!
     @IBOutlet weak var cameraView: UIView!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var photoTableView: UITableView!
+    @IBOutlet weak var mainTableView: UITableView!
     @IBOutlet weak var horizPopUpConstraint: NSLayoutConstraint!
+    @IBOutlet weak var mainTableViewHorizConstraint: NSLayoutConstraint!
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.revealViewController()?.rearViewRevealWidth = self.view.frame.width - 8
+        addPanGesture(view: mainTableView)
         
+//        self.revealViewController()?.rearViewRevealWidth = self.view.frame.width - 8
+        currentViewPosition = view.frame.size.width
+        mainTableViewHorizConstraint.constant = currentViewPosition
         
         navigationController?.navigationBar.barTintColor = UIColor.darkGray
+        
+//        screenEdgeRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(swipeTable(sender:)))
+//        screenEdgeRecognizer.edges = .right
+//        view.addGestureRecognizer(screenEdgeRecognizer)
         
 ////        swipeGestureRecognizer = UISwipeGestureRecognizer
 //        swipeGestureRecognizer = MySwipeGestureRecognizer(target: self, swipeLeftSegue: "yourSwipeLeftSegue", swipeRightSeque: "yourSwipeRightSegue")
@@ -78,13 +91,21 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         gradientBarBottom.constant = -120
 
         
-        tableView.dataSource = self
-        tableView.delegate = self
+        photoTableView.dataSource = self
+        photoTableView.delegate = self
+        mainTableView.dataSource = self
+        mainTableView.delegate = self
         
         
         effect = visualEffectedView.effect
         visualEffectedView.effect = nil
         visualEffectedView.isHidden = true
+        
+        effect = mainTableBlur.effect
+        mainTableBlur.effect = nil
+        mainTableBlur.isHidden = true
+        
+//        mainTableBlur.alpha = 0
         
         loadProjects()
         
@@ -105,6 +126,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
 //            print("Error whileenumerating files \(documentsURL.path): \(error.localizedDescription)")
 //        }
         
+//        screenEdgeRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector())
         
         
     }
@@ -366,7 +388,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     func loadProjects() {
 
         categories = realm.objects(Category.self)
-        tableView.reloadData()
+        photoTableView.reloadData()
         
         //MARK: - Core Data
 //        let request : NSFetchRequest<Category> = Category.fetchRequest()
@@ -381,19 +403,110 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         
     }
     
-    func locTouchId() {
-        let context: LAContext = LAContext()
+    @objc func swipeTable(sender: UIScreenEdgePanGestureRecognizer) {
         
-        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil){
-            context.evaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, localizedReason: "Stick your finger on it!") { (wasSuccessful, error) in
-                if wasSuccessful {
-                    print ("was a success")
-                } else {
-                    print ("you are not logged in")
+        let translation = sender.translation(in: view)
+        
+        switch sender.state {
+        case .began, .changed:
+            
+            mainTableViewHorizConstraint.constant = (mainTableViewHorizConstraint.constant + translation.x)
+            sender.setTranslation(CGPoint.zero, in: view)
+            print("mainTableViewHorizConstraint is \(String(describing: mainTableViewHorizConstraint.constant))")
+            
+            // Map mainTableBlur view alpha to swipe/pan
+//            let fractionComplete = mainTableViewHorizConstraint.constant / currentViewPosition
+//            let absoluteFraction = abs(fractionComplete - 1.3)
+//            print("translation.x is \(String(describing: translation.x))")
+//            print("mainTableViewHorizConstraint is \(String(describing: mainTableViewHorizConstraint.constant))")
+//            print("fractionComplete is \(String(describing: fractionComplete))")
+//            self.mainTableBlur.effect = self.effect
+//            mainTableBlur.alpha = absoluteFraction
+            
+            
+        case .ended:
+            if mainTableViewHorizConstraint.constant <= (currentViewPosition * 0.75) {
+                UIView.animate(withDuration: 0.15) {
+                    self.mainTableViewHorizConstraint.constant = 0.0
+//                    self.mainTableBlur.isHidden = false
+                    self.mainTableBlur.isHidden = false
+                    self.mainTableBlur.effect = self.effect
+                    self.view.layoutIfNeeded()
+//                    self.addPanGestures(view: self.mainTableView)
+                }
+            } else {
+                UIView.animate(withDuration: 0.15) {
+                    self.mainTableViewHorizConstraint.constant = self.currentViewPosition
+                    self.mainTableBlur.effect = nil
+                    self.view.layoutIfNeeded()
+                    self.mainTableBlur.isHidden = true
+//                    self.mainTableBlur.effect = nil
                 }
             }
+            
+        default:
+            break
         }
+        
     }
+    
+    @objc func dismissTable(sender: UIPanGestureRecognizer) {
+        
+        let translation = sender.translation(in: view)
+        
+        switch sender.state {
+        case .began, .changed:
+            mainTableViewHorizConstraint.constant = (mainTableViewHorizConstraint.constant + translation.x)
+            sender.setTranslation(CGPoint.zero, in: view)
+        case .ended:
+            if mainTableViewHorizConstraint.constant <= (currentViewPosition * 0.2) {
+                UIView.animate(withDuration: 0.15, animations: {
+                    self.mainTableViewHorizConstraint.constant = 0.0
+                    
+                    self.view.layoutIfNeeded()
+                })
+            } else {
+                UIView.animate(withDuration: 0.15, animations: {
+                    self.mainTableViewHorizConstraint.constant = self.currentViewPosition
+                    self.mainTableBlur.effect = nil
+                    self.mainTableBlur.isHidden = true
+                    self.view.layoutIfNeeded()
+                })
+            }
+            
+        default:
+            break
+        }
+
+    }
+    
+    func addPanGesture (view: UIView) {
+        let screenEdgeRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(swipeTable(sender:)))
+        screenEdgeRecognizer.edges = .right
+        self.view.addGestureRecognizer(screenEdgeRecognizer)
+        
+        let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(dismissTable(sender:)))
+        view.addGestureRecognizer(panRecognizer)
+    }
+    
+//    func addPanGestures (view: UIView) {
+//        let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(dismissTable(sender:)))
+//        view.addGestureRecognizer(panRecognizer)
+//    }
+    
+//    func locTouchId() {
+//        let context: LAContext = LAContext()
+//
+//        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil){
+//            context.evaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, localizedReason: "Stick your finger on it!") { (wasSuccessful, error) in
+//                if wasSuccessful {
+//                    print ("was a success")
+//                } else {
+//                    print ("you are not logged in")
+//                }
+//            }
+//        }
+//    }
     
 //    func applicationDidBecomeActive(_ application: UIApplication) {
 //        locTouchId()
@@ -409,12 +522,31 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "flippedProjectCell", for: indexPath)
-        cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added Yet"
-
-        cell.textLabel?.font = UIFont(name: "Helvetica Neue Light", size: 18.0)
+        switch tableView {
+        case photoTableView:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "flippedProjectCell", for: indexPath)
+            cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added Yet"
+            cell.textLabel?.font = UIFont(name: "Helvetica Neue Light", size: 18.0)
+            return cell
+        case mainTableView:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
+            
+            tableView.rowHeight = 90
+            cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added Yet"
+            cell.textLabel?.font = UIFont(name: "HelveticaNeue-Thin", size: 34.0)
+            cell.textLabel?.textColor = #colorLiteral(red: 0.6456218274, green: 0.1673866657, blue: 0.002206729275, alpha: 1)
+            cell.textLabel?.textAlignment = .center
+            return cell
+        default:
+            print("Something's wrong!")
+            
+            
+        }
+        
+        return UITableViewCell()
+        
         //cell.detailTextLabel?.text = ""
-        return cell
+        
         
     }
     
@@ -433,27 +565,37 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
 //    }
     
     
-    var interactor: Interactor? = nil
+//    var interactor: Interactor? = nil
     
-    @IBAction func handleGesture(sender: UIPanGestureRecognizer) {
-        
-        let translation = sender.translation(in: view)
-        
-        let progress = MenuHelper.calculateProgress(translationInView: translation, viewBounds: view.bounds, direction: .Left)
-        
-        MenuHelper.mapGestureStateToInteractor(
-            gestureState: sender.state,
-            progress: progress,
-            interactor: interactor) {
-                self.dismiss(animated: true, completion: nil)
-        }
-    }
+//    @IBAction func handlePan( _ recognizer: UIScreenEdgePanGestureRecognizer) {
+////
+////        guard let  recognizerView = recognizer.view else {
+////            return
+////        }
+//
+//        let translation = recognizer.translation(in: view)
+////        mainTableViewHorizConstraint.constant += translation.x
+//
+//
+//
+////        let translation = sender.translation(in: view)
+//
+//        let progress = MenuHelper.calculateProgress(translationInView: translation, viewBounds: view.bounds, direction: .Left)
+//
+//        MenuHelper.mapGestureStateToInteractor(
+//            gestureState: recognizer.state,
+//            progress: progress,
+//            interactor: interactor) {
+////                self.dismiss(animated: true, completion: nil)
+//                mainTableViewHorizConstraint.constant += translation.x
+//        }
+//    }
     
     
-    
-    @IBAction func closeButton(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
+//    
+//    @IBAction func closeButton(_ sender: Any) {
+//        dismiss(animated: true, completion: nil)
+//    }
     
     
 
