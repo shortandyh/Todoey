@@ -28,6 +28,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     var projectName: String?
     var imgNo = 1
     var images : [UIImage] = []
+    var screenHeightPercentage: CGFloat = 0.0
     
     var categories: Results<Category>?
     var todoItems: Results<Item>?
@@ -52,8 +53,8 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     @IBOutlet weak var clearBtn: RoundedShadowButton!
     @IBOutlet weak var thumbBtn: RoundedShadowButton!
     @IBOutlet weak var gradientBar: UIView!
-    @IBOutlet weak var gradientBarBottom: NSLayoutConstraint!
     
+    @IBOutlet weak var gradientBarBottom: NSLayoutConstraint!
     @IBOutlet weak var visualEffectedView: UIVisualEffectView!
     @IBOutlet weak var mainTableBlur: UIVisualEffectView!
     @IBOutlet weak var cameraView: UIView!
@@ -87,8 +88,12 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
 
         
 //        SVProgressHUD.dismiss()
-        gradientBar.setGradientBackground()
-        gradientBarBottom.constant = -120
+        screenHeightPercentage = (view.frame.size.height / 10)
+        print(screenHeightPercentage)
+//        gradientBar.setGradientBackground()
+//        gradientBar.frame.size.height = screenHeightPercentage * -1
+        gradientBarBottom.constant = screenHeightPercentage * -1
+//        gradientBarTop.constant = screenHeightPercentage
 
         
         photoTableView.dataSource = self
@@ -175,6 +180,11 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         } catch {
             debugPrint(error)
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -317,9 +327,9 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     
     //MARK: - Functions
     
-    @IBAction func segueToProjects(_ sender: Any) {
-        performSegue(withIdentifier: "camToPro", sender: self)
-    }
+//    @IBAction func segueToProjects(_ sender: Any) {
+//        performSegue(withIdentifier: "camToPro", sender: self)
+//    }
     
 
     
@@ -368,7 +378,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     }
     
     func animateDown(duration: Double) {
-        gradientBarBottom.constant = -120
+        gradientBarBottom.constant = screenHeightPercentage
         UIView.animate(withDuration: duration, animations: {
             self.view.layoutIfNeeded()
         })
@@ -414,6 +424,15 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
             sender.setTranslation(CGPoint.zero, in: view)
             print("mainTableViewHorizConstraint is \(String(describing: mainTableViewHorizConstraint.constant))")
             
+            UIView.animate(withDuration: 0.2) {
+//                self.mainTableViewHorizConstraint.constant = 0.0
+                //                    self.mainTableBlur.isHidden = false
+                self.mainTableBlur.isHidden = false
+                self.mainTableBlur.effect = self.effect
+                self.view.layoutIfNeeded()
+                //                    self.addPanGestures(view: self.mainTableView)
+            }
+            
             // Map mainTableBlur view alpha to swipe/pan
 //            let fractionComplete = mainTableViewHorizConstraint.constant / currentViewPosition
 //            let absoluteFraction = abs(fractionComplete - 1.3)
@@ -429,8 +448,8 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
                 UIView.animate(withDuration: 0.15) {
                     self.mainTableViewHorizConstraint.constant = 0.0
 //                    self.mainTableBlur.isHidden = false
-                    self.mainTableBlur.isHidden = false
-                    self.mainTableBlur.effect = self.effect
+//                    self.mainTableBlur.isHidden = false
+//                    self.mainTableBlur.effect = self.effect
                     self.view.layoutIfNeeded()
 //                    self.addPanGestures(view: self.mainTableView)
                 }
@@ -552,10 +571,33 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //                let projectName = proj[indexPath.row]
-        if let indexPath = tableView.indexPathForSelectedRow {
-            self.selectedProject = categories?[indexPath.row]
-//            print(selectedProject!)
+        switch tableView {
+        case photoTableView:
+            if let indexPath = tableView.indexPathForSelectedRow {
+                self.selectedProject = categories?[indexPath.row]
+                //            print(selectedProject!)
+            }
+        case mainTableView:
+            performSegue(withIdentifier: "goToPhotos", sender: self)
+        default:
+            break
         }
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destinationVC = segue.destination as? PhotosCollectionViewController {
+            
+            if let indexPath = mainTableView.indexPathForSelectedRow {
+                destinationVC.selectedCategory = categories?[indexPath.row]
+                //            print(destinationVC.selectedCategory?.name)
+            }
+        }
+        
+        //        if let destinationViewController = segue.destination as? CameraViewController {
+        //            destinationViewController.transitioningDelegate = self
+        //            destinationViewController.interactor = interactor
+        //        }
     }
     
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
