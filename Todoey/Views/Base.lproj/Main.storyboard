@@ -397,29 +397,21 @@
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Tw-Qs-eXp">
-                                <rect key="frame" x="0.0" y="600.5" width="375" height="66.5"/>
+                                <rect key="frame" x="0.0" y="300" width="375" height="67"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="center" distribution="fillEqually" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="rFa-Xn-Dam">
-                                        <rect key="frame" x="8" y="8" width="359" height="50.5"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="caa-dS-H4Z">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="67"/>
                                         <subviews>
-                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="StA-v0-Jaj">
-                                                <rect key="frame" x="0.0" y="0.0" width="105.5" height="50.5"/>
-                                                <inset key="imageEdgeInsets" minX="30" minY="25" maxX="30" maxY="10"/>
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="StA-v0-Jaj">
+                                                <rect key="frame" x="0.0" y="0.0" width="125" height="67"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="30" minY="0.0" maxX="30" maxY="40"/>
                                                 <state key="normal" title="Button" image="AddFolderIcon"/>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B7R-yW-N75">
-                                                <rect key="frame" x="126.5" y="0.0" width="106" height="50.5"/>
-                                                <inset key="imageEdgeInsets" minX="35" minY="25" maxX="35" maxY="0.0"/>
-                                                <state key="normal" title="Save" image="SaveIcon">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="savePhotosToCategory:" destination="bzE-u6-PVP" eventType="touchUpInside" id="LUD-OL-aHL"/>
-                                                </connections>
-                                            </button>
                                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GF2-TX-8Od" customClass="RoundedShadowButton" customModule="Todoey" customModuleProvider="target">
-                                                <rect key="frame" x="253.5" y="0.0" width="105.5" height="50.5"/>
-                                                <inset key="imageEdgeInsets" minX="40" minY="25" maxX="40" maxY="15"/>
+                                                <rect key="frame" x="125" y="0.0" width="125" height="67"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="40" minY="0.0" maxX="40" maxY="40"/>
                                                 <state key="normal" title="Clear" image="DismissIcon_2">
                                                     <color key="titleColor" red="0.64562182739999996" green="0.16738666569999999" blue="0.0022067292749999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
@@ -427,15 +419,27 @@
                                                     <action selector="ClearBttn:" destination="bzE-u6-PVP" eventType="touchUpInside" id="UkD-yi-Gbt"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B7R-yW-N75">
+                                                <rect key="frame" x="250" y="0.0" width="125" height="67"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="35" minY="0.0" maxX="35" maxY="40"/>
+                                                <state key="normal" title="Save" image="SaveIcon">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="savePhotosToCategory:" destination="bzE-u6-PVP" eventType="touchUpInside" id="LUD-OL-aHL"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </stackView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailingMargin" secondItem="rFa-Xn-Dam" secondAttribute="trailing" id="6i6-e0-q1R"/>
-                                    <constraint firstItem="rFa-Xn-Dam" firstAttribute="leading" secondItem="0Tw-Qs-eXp" secondAttribute="leadingMargin" id="Hof-m5-YZv"/>
-                                    <constraint firstAttribute="bottomMargin" secondItem="rFa-Xn-Dam" secondAttribute="bottom" id="cub-Jl-icS"/>
-                                    <constraint firstItem="rFa-Xn-Dam" firstAttribute="top" secondItem="0Tw-Qs-eXp" secondAttribute="topMargin" id="o3c-tm-ld1"/>
+                                    <constraint firstAttribute="trailing" secondItem="caa-dS-H4Z" secondAttribute="trailing" id="OLn-Ig-iIN"/>
+                                    <constraint firstAttribute="bottom" secondItem="caa-dS-H4Z" secondAttribute="bottom" id="sBb-RJ-E4U"/>
+                                    <constraint firstItem="caa-dS-H4Z" firstAttribute="top" secondItem="0Tw-Qs-eXp" secondAttribute="top" id="sdS-zk-ODc"/>
+                                    <constraint firstItem="caa-dS-H4Z" firstAttribute="leading" secondItem="0Tw-Qs-eXp" secondAttribute="leading" id="tIy-Z6-E3s"/>
                                 </constraints>
                             </view>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U1n-C1-SP0">
@@ -457,7 +461,7 @@
                                         </visualEffectView>
                                     </subviews>
                                 </view>
-                                <blurEffect style="dark"/>
+                                <blurEffect style="light"/>
                             </visualEffectView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8j3-a3-xsx" customClass="RoundedTableView" customModule="Todoey" customModuleProvider="target">
                                 <rect key="frame" x="19" y="84" width="337.5" height="553"/>
@@ -491,6 +495,7 @@
                             <constraint firstAttribute="bottom" secondItem="9sW-GS-UGd" secondAttribute="bottom" id="Kj3-aB-94E"/>
                             <constraint firstItem="HhQ-LN-bw9" firstAttribute="centerX" secondItem="KTI-2W-N60" secondAttribute="centerX" id="QpA-fX-wPl"/>
                             <constraint firstItem="znJ-l8-nQU" firstAttribute="top" secondItem="KTI-2W-N60" secondAttribute="top" id="cou-pt-jFb"/>
+                            <constraint firstItem="0Tw-Qs-eXp" firstAttribute="centerY" secondItem="KTI-2W-N60" secondAttribute="centerY" id="eqx-we-mhX"/>
                             <constraint firstItem="9sW-GS-UGd" firstAttribute="trailing" secondItem="U1n-C1-SP0" secondAttribute="trailing" id="hqh-SC-uSd"/>
                             <constraint firstItem="8j3-a3-xsx" firstAttribute="top" secondItem="1jF-Z8-ILL" secondAttribute="top" constant="20" id="iZt-sd-BCO"/>
                             <constraint firstItem="1jF-Z8-ILL" firstAttribute="bottom" secondItem="8j3-a3-xsx" secondAttribute="bottom" constant="30" id="ioG-te-dfk"/>
@@ -500,7 +505,6 @@
                             <constraint firstItem="9sW-GS-UGd" firstAttribute="leading" secondItem="1jF-Z8-ILL" secondAttribute="leading" id="nbY-bb-4T5"/>
                             <constraint firstItem="laS-WY-nqP" firstAttribute="centerX" secondItem="KTI-2W-N60" secondAttribute="centerX" id="o28-zT-cV4"/>
                             <constraint firstItem="znJ-l8-nQU" firstAttribute="bottom" secondItem="KTI-2W-N60" secondAttribute="bottom" id="oyp-ls-CG4"/>
-                            <constraint firstItem="0Tw-Qs-eXp" firstAttribute="bottom" secondItem="9sW-GS-UGd" secondAttribute="bottom" id="rH1-nx-6sk"/>
                             <constraint firstItem="8j3-a3-xsx" firstAttribute="centerX" secondItem="KTI-2W-N60" secondAttribute="centerX" id="sXg-6c-WWE"/>
                             <constraint firstItem="znJ-l8-nQU" firstAttribute="leading" secondItem="KTI-2W-N60" secondAttribute="leading" id="v7e-hz-Czj"/>
                             <constraint firstItem="HhQ-LN-bw9" firstAttribute="centerY" secondItem="KTI-2W-N60" secondAttribute="centerY" constant="-50" id="vN5-Ec-g9K"/>
@@ -516,7 +520,7 @@
                         <outlet property="clearBtn" destination="GF2-TX-8Od" id="Mda-Nr-DRu"/>
                         <outlet property="flippedTableView" destination="xnH-3u-a6l" id="huL-Cd-vHq"/>
                         <outlet property="gradientBar" destination="0Tw-Qs-eXp" id="N62-vu-TVm"/>
-                        <outlet property="gradientBarBottom" destination="rH1-nx-6sk" id="VZP-Zc-skZ"/>
+                        <outlet property="gradientBarY" destination="eqx-we-mhX" id="Gq9-S2-pTK"/>
                         <outlet property="horizPopUpConstraint" destination="8zG-ED-MdC" id="Eip-fE-XRC"/>
                         <outlet property="mainTableBlur" destination="U1n-C1-SP0" id="THb-tq-UHd"/>
                         <outlet property="mainTableView" destination="8j3-a3-xsx" id="oiK-Ri-m9y"/>

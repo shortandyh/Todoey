@@ -37,6 +37,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
 //    var screenEdgeRecognizer: UIScreenEdgePanGestureRecognizer!
     var currentViewPosition: CGFloat = 0.0
     
+    
     var selectedProject : Category?
 //    {
 //        didSet{
@@ -54,7 +55,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     @IBOutlet weak var thumbBtn: RoundedShadowButton!
     @IBOutlet weak var gradientBar: UIView!
     
-    @IBOutlet weak var gradientBarBottom: NSLayoutConstraint!
+    @IBOutlet weak var gradientBarY: NSLayoutConstraint!
     @IBOutlet weak var visualEffectedView: UIVisualEffectView!
     @IBOutlet weak var mainTableBlur: UIVisualEffectView!
     @IBOutlet weak var cameraView: UIView!
@@ -63,12 +64,21 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     @IBOutlet weak var horizPopUpConstraint: NSLayoutConstraint!
     @IBOutlet weak var mainTableViewHorizConstraint: NSLayoutConstraint!
     
+    var animator = UIViewPropertyAnimator(duration: 0.5, curve: .linear)
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         addPanGesture(view: mainTableView)
+        
+        
+        animator.addAnimations {
+            //            self.mainTableBlur.effect = self.effect
+            
+            self.mainTableBlur.effect = UIBlurEffect(style: .dark)
+        }
+        
         
 //        self.revealViewController()?.rearViewRevealWidth = self.view.frame.width - 8
         currentViewPosition = view.frame.size.width
@@ -92,9 +102,12 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         print(screenHeightPercentage)
 //        gradientBar.setGradientBackground()
 //        gradientBar.frame.size.height = screenHeightPercentage * -1
-        gradientBarBottom.constant = screenHeightPercentage * -1
+//        gradientBarBottom.constant = screenHeightPercentage * -1
 //        gradientBarTop.constant = screenHeightPercentage
-
+        
+//        gradientBar.center.y = gradientBar.frame.size.height / 2
+        gradientBarY.constant = (cameraView.frame.size.height / 2) + (gradientBar.frame.size.height / 2)
+        
         
         photoTableView.dataSource = self
         photoTableView.delegate = self
@@ -141,6 +154,8 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         
         
         previewLayer.frame = cameraView.bounds
+        
+        
 //        locTouchId()
         
     }
@@ -371,14 +386,14 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     }
     
     func animateUp() {
-        gradientBarBottom.constant = 0
+        gradientBarY.constant = (cameraView.frame.size.height / 2) - (gradientBar.frame.size.height / 2)
         UIView.animate(withDuration: 0.5, animations: {
             self.view.layoutIfNeeded()
         })
     }
     
     func animateDown(duration: Double) {
-        gradientBarBottom.constant = screenHeightPercentage
+        gradientBarY.constant = (cameraView.frame.size.height / 2) - (gradientBar.frame.size.height / 2)
         UIView.animate(withDuration: duration, animations: {
             self.view.layoutIfNeeded()
         })
@@ -420,33 +435,42 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         switch sender.state {
         case .began, .changed:
             
+            
+            self.mainTableBlur.isHidden = false
+            
             mainTableViewHorizConstraint.constant = (mainTableViewHorizConstraint.constant + translation.x)
             sender.setTranslation(CGPoint.zero, in: view)
-            print("mainTableViewHorizConstraint is \(String(describing: mainTableViewHorizConstraint.constant))")
             
-            UIView.animate(withDuration: 0.2) {
-//                self.mainTableViewHorizConstraint.constant = 0.0
-                //                    self.mainTableBlur.isHidden = false
-                self.mainTableBlur.isHidden = false
-                self.mainTableBlur.effect = self.effect
-                self.view.layoutIfNeeded()
-                //                    self.addPanGestures(view: self.mainTableView)
-            }
-            
-            // Map mainTableBlur view alpha to swipe/pan
-//            let fractionComplete = mainTableViewHorizConstraint.constant / currentViewPosition
-//            let absoluteFraction = abs(fractionComplete - 1.3)
-//            print("translation.x is \(String(describing: translation.x))")
+            let fractionComplete = mainTableViewHorizConstraint.constant / currentViewPosition
+            let absoluteFraction = abs(fractionComplete - 1.0)
+            animator.fractionComplete = absoluteFraction
 //            print("mainTableViewHorizConstraint is \(String(describing: mainTableViewHorizConstraint.constant))")
-//            print("fractionComplete is \(String(describing: fractionComplete))")
-//            self.mainTableBlur.effect = self.effect
-//            mainTableBlur.alpha = absoluteFraction
+//
+//            UIView.animate(withDuration: 0.2) {
+////                self.mainTableViewHorizConstraint.constant = 0.0
+//                //                    self.mainTableBlur.isHidden = false
+//                self.mainTableBlur.isHidden = false
+//                self.mainTableBlur.effect = self.effect
+//                self.view.layoutIfNeeded()
+//                //                    self.addPanGestures(view: self.mainTableView)
+//            }
+//
+//            // Map mainTableBlur view alpha to swipe/pan
+//
+////            let absoluteFraction = abs(fractionComplete - 1.3)
+            print("translation.x is \(String(describing: translation.x))")
+            print("mainTableViewHorizConstraint is \(String(describing: mainTableViewHorizConstraint.constant))")
+            print("fractionComplete is \(String(describing: fractionComplete))")
+            print("absoluteFraction is \(String(describing: absoluteFraction))")
+////            self.mainTableBlur.effect = self.effect
+////            mainTableBlur.alpha = absoluteFraction
             
             
         case .ended:
-            if mainTableViewHorizConstraint.constant <= (currentViewPosition * 0.75) {
-                UIView.animate(withDuration: 0.15) {
+            if mainTableViewHorizConstraint.constant <= (currentViewPosition * 0.4) {
+                UIView.animate(withDuration: 0.25) {
                     self.mainTableViewHorizConstraint.constant = 0.0
+                    self.animator.fractionComplete = 1.0
 //                    self.mainTableBlur.isHidden = false
 //                    self.mainTableBlur.isHidden = false
 //                    self.mainTableBlur.effect = self.effect
@@ -456,7 +480,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
             } else {
                 UIView.animate(withDuration: 0.15) {
                     self.mainTableViewHorizConstraint.constant = self.currentViewPosition
-                    self.mainTableBlur.effect = nil
+//                    self.mainTableBlur.effect = nil
                     self.view.layoutIfNeeded()
                     self.mainTableBlur.isHidden = true
 //                    self.mainTableBlur.effect = nil
@@ -477,6 +501,10 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         case .began, .changed:
             mainTableViewHorizConstraint.constant = (mainTableViewHorizConstraint.constant + translation.x)
             sender.setTranslation(CGPoint.zero, in: view)
+            
+//            let fractionComplete = mainTableViewHorizConstraint.constant / currentViewPosition
+//            let absoluteFraction = abs(fractionComplete - 1.0)
+//            animator.fractionComplete = absoluteFraction
         case .ended:
             if mainTableViewHorizConstraint.constant <= (currentViewPosition * 0.2) {
                 UIView.animate(withDuration: 0.15, animations: {
@@ -487,9 +515,10 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
             } else {
                 UIView.animate(withDuration: 0.15, animations: {
                     self.mainTableViewHorizConstraint.constant = self.currentViewPosition
-                    self.mainTableBlur.effect = nil
-                    self.mainTableBlur.isHidden = true
+//                    self.mainTableBlur.effect = nil
                     self.view.layoutIfNeeded()
+                    self.mainTableBlur.isHidden = true
+                    
                 })
             }
             
@@ -678,3 +707,62 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
     }
     
 }
+
+
+
+
+//@objc func swipeTable(sender: UIScreenEdgePanGestureRecognizer) {
+//
+//    let translation = sender.translation(in: view)
+//
+//    switch sender.state {
+//    case .began, .changed:
+//
+//        mainTableViewHorizConstraint.constant = (mainTableViewHorizConstraint.constant + translation.x)
+//        sender.setTranslation(CGPoint.zero, in: view)
+//        print("mainTableViewHorizConstraint is \(String(describing: mainTableViewHorizConstraint.constant))")
+//
+//        UIView.animate(withDuration: 0.2) {
+//            //                self.mainTableViewHorizConstraint.constant = 0.0
+//            //                    self.mainTableBlur.isHidden = false
+//            self.mainTableBlur.isHidden = false
+//            self.mainTableBlur.effect = self.effect
+//            self.view.layoutIfNeeded()
+//            //                    self.addPanGestures(view: self.mainTableView)
+//        }
+//
+//        // Map mainTableBlur view alpha to swipe/pan
+//        let fractionComplete = mainTableViewHorizConstraint.constant / currentViewPosition
+//        //            let absoluteFraction = abs(fractionComplete - 1.3)
+//        print("translation.x is \(String(describing: translation.x))")
+//        print("mainTableViewHorizConstraint is \(String(describing: mainTableViewHorizConstraint.constant))")
+//        print("fractionComplete is \(String(describing: fractionComplete))")
+//        //            self.mainTableBlur.effect = self.effect
+//        //            mainTableBlur.alpha = absoluteFraction
+//
+//
+//    case .ended:
+//        if mainTableViewHorizConstraint.constant <= (currentViewPosition * 0.75) {
+//            UIView.animate(withDuration: 0.15) {
+//                self.mainTableViewHorizConstraint.constant = 0.0
+//                //                    self.mainTableBlur.isHidden = false
+//                //                    self.mainTableBlur.isHidden = false
+//                //                    self.mainTableBlur.effect = self.effect
+//                self.view.layoutIfNeeded()
+//                //                    self.addPanGestures(view: self.mainTableView)
+//            }
+//        } else {
+//            UIView.animate(withDuration: 0.15) {
+//                self.mainTableViewHorizConstraint.constant = self.currentViewPosition
+//                self.mainTableBlur.effect = nil
+//                self.view.layoutIfNeeded()
+//                self.mainTableBlur.isHidden = true
+//                //                    self.mainTableBlur.effect = nil
+//            }
+//        }
+//
+//    default:
+//        break
+//    }
+//
+//}
