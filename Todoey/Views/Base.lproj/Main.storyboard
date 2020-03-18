@@ -396,52 +396,40 @@
                                     <constraint firstAttribute="height" constant="460" id="Xa2-dg-gzV"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Tw-Qs-eXp">
-                                <rect key="frame" x="0.0" y="300" width="375" height="67"/>
+                            <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" distribution="fillEqually" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="caa-dS-H4Z">
+                                <rect key="frame" x="0.0" y="587" width="375" height="80"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="caa-dS-H4Z">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="67"/>
-                                        <subviews>
-                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="StA-v0-Jaj">
-                                                <rect key="frame" x="0.0" y="0.0" width="125" height="67"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="imageEdgeInsets" minX="30" minY="0.0" maxX="30" maxY="40"/>
-                                                <state key="normal" title="Button" image="AddFolderIcon"/>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GF2-TX-8Od" customClass="RoundedShadowButton" customModule="Todoey" customModuleProvider="target">
-                                                <rect key="frame" x="125" y="0.0" width="125" height="67"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="imageEdgeInsets" minX="40" minY="0.0" maxX="40" maxY="40"/>
-                                                <state key="normal" title="Clear" image="DismissIcon_2">
-                                                    <color key="titleColor" red="0.64562182739999996" green="0.16738666569999999" blue="0.0022067292749999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="ClearBttn:" destination="bzE-u6-PVP" eventType="touchUpInside" id="UkD-yi-Gbt"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B7R-yW-N75">
-                                                <rect key="frame" x="250" y="0.0" width="125" height="67"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="imageEdgeInsets" minX="35" minY="0.0" maxX="35" maxY="40"/>
-                                                <state key="normal" title="Save" image="SaveIcon">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="savePhotosToCategory:" destination="bzE-u6-PVP" eventType="touchUpInside" id="LUD-OL-aHL"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="StA-v0-Jaj">
+                                        <rect key="frame" x="0.0" y="0.0" width="111.5" height="80"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </stackView>
+                                        <inset key="imageEdgeInsets" minX="35" minY="35" maxX="35" maxY="35"/>
+                                        <state key="normal" title="Button" image="AddFolderIcon"/>
+                                    </button>
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GF2-TX-8Od" customClass="RoundedShadowButton" customModule="Todoey" customModuleProvider="target">
+                                        <rect key="frame" x="131.5" y="0.0" width="112" height="80"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="imageEdgeInsets" minX="40" minY="30" maxX="40" maxY="30"/>
+                                        <state key="normal" title="Clear" image="DismissIcon_2">
+                                            <color key="titleColor" red="0.64562182739999996" green="0.16738666569999999" blue="0.0022067292749999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="ClearBttn:" destination="bzE-u6-PVP" eventType="touchUpInside" id="UkD-yi-Gbt"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B7R-yW-N75">
+                                        <rect key="frame" x="263.5" y="0.0" width="111.5" height="80"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="imageEdgeInsets" minX="40" minY="30" maxX="40" maxY="30"/>
+                                        <state key="normal" title="Save" image="SaveIcon">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="savePhotosToCategory:" destination="bzE-u6-PVP" eventType="touchUpInside" id="LUD-OL-aHL"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="caa-dS-H4Z" secondAttribute="trailing" id="OLn-Ig-iIN"/>
-                                    <constraint firstAttribute="bottom" secondItem="caa-dS-H4Z" secondAttribute="bottom" id="sBb-RJ-E4U"/>
-                                    <constraint firstItem="caa-dS-H4Z" firstAttribute="top" secondItem="0Tw-Qs-eXp" secondAttribute="top" id="sdS-zk-ODc"/>
-                                    <constraint firstItem="caa-dS-H4Z" firstAttribute="leading" secondItem="0Tw-Qs-eXp" secondAttribute="leading" id="tIy-Z6-E3s"/>
-                                </constraints>
-                            </view>
+                            </stackView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U1n-C1-SP0">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="2a0-vc-CD3">
@@ -484,24 +472,23 @@
                         <constraints>
                             <constraint firstItem="8j3-a3-xsx" firstAttribute="width" secondItem="KTI-2W-N60" secondAttribute="width" multiplier="0.9" id="484-kY-OGu"/>
                             <constraint firstItem="xnH-3u-a6l" firstAttribute="centerY" secondItem="KTI-2W-N60" secondAttribute="centerY" constant="-50" id="8zG-ED-MdC"/>
-                            <constraint firstItem="0Tw-Qs-eXp" firstAttribute="height" secondItem="9sW-GS-UGd" secondAttribute="height" multiplier="0.1" id="9Dv-PQ-WlX"/>
                             <constraint firstItem="U1n-C1-SP0" firstAttribute="leading" secondItem="9sW-GS-UGd" secondAttribute="leading" id="CbY-oT-ZI4"/>
+                            <constraint firstItem="caa-dS-H4Z" firstAttribute="leading" secondItem="1jF-Z8-ILL" secondAttribute="leading" id="ESR-Cf-z4V"/>
                             <constraint firstItem="znJ-l8-nQU" firstAttribute="trailing" secondItem="KTI-2W-N60" secondAttribute="trailing" id="FRZ-JM-ZM7"/>
                             <constraint firstAttribute="centerY" secondItem="trc-mX-tkm" secondAttribute="centerY" id="GKX-Ec-s1G"/>
-                            <constraint firstItem="9sW-GS-UGd" firstAttribute="trailing" secondItem="0Tw-Qs-eXp" secondAttribute="trailing" id="Idq-ZU-GXZ"/>
-                            <constraint firstItem="0Tw-Qs-eXp" firstAttribute="leading" secondItem="9sW-GS-UGd" secondAttribute="leading" id="JfT-yH-wY9"/>
+                            <constraint firstItem="1jF-Z8-ILL" firstAttribute="trailing" secondItem="caa-dS-H4Z" secondAttribute="trailing" id="JWS-8w-wNm"/>
                             <constraint firstItem="U1n-C1-SP0" firstAttribute="top" secondItem="9sW-GS-UGd" secondAttribute="top" id="KUK-2m-ELG"/>
                             <constraint firstItem="9sW-GS-UGd" firstAttribute="bottom" secondItem="U1n-C1-SP0" secondAttribute="bottom" id="KWr-7C-KDg"/>
                             <constraint firstAttribute="bottom" secondItem="9sW-GS-UGd" secondAttribute="bottom" id="Kj3-aB-94E"/>
                             <constraint firstItem="HhQ-LN-bw9" firstAttribute="centerX" secondItem="KTI-2W-N60" secondAttribute="centerX" id="QpA-fX-wPl"/>
                             <constraint firstItem="znJ-l8-nQU" firstAttribute="top" secondItem="KTI-2W-N60" secondAttribute="top" id="cou-pt-jFb"/>
-                            <constraint firstItem="0Tw-Qs-eXp" firstAttribute="centerY" secondItem="KTI-2W-N60" secondAttribute="centerY" id="eqx-we-mhX"/>
                             <constraint firstItem="9sW-GS-UGd" firstAttribute="trailing" secondItem="U1n-C1-SP0" secondAttribute="trailing" id="hqh-SC-uSd"/>
                             <constraint firstItem="8j3-a3-xsx" firstAttribute="top" secondItem="1jF-Z8-ILL" secondAttribute="top" constant="20" id="iZt-sd-BCO"/>
                             <constraint firstItem="1jF-Z8-ILL" firstAttribute="bottom" secondItem="8j3-a3-xsx" secondAttribute="bottom" constant="30" id="ioG-te-dfk"/>
                             <constraint firstItem="9sW-GS-UGd" firstAttribute="trailing" secondItem="1jF-Z8-ILL" secondAttribute="trailing" id="lBP-vx-0pb"/>
                             <constraint firstItem="xnH-3u-a6l" firstAttribute="centerX" secondItem="KTI-2W-N60" secondAttribute="centerX" id="mIV-tG-hcq"/>
                             <constraint firstAttribute="centerX" secondItem="trc-mX-tkm" secondAttribute="centerX" id="mla-CU-8Cq"/>
+                            <constraint firstItem="caa-dS-H4Z" firstAttribute="height" secondItem="9sW-GS-UGd" secondAttribute="height" multiplier="0.12" id="mug-gs-px2"/>
                             <constraint firstItem="9sW-GS-UGd" firstAttribute="leading" secondItem="1jF-Z8-ILL" secondAttribute="leading" id="nbY-bb-4T5"/>
                             <constraint firstItem="laS-WY-nqP" firstAttribute="centerX" secondItem="KTI-2W-N60" secondAttribute="centerX" id="o28-zT-cV4"/>
                             <constraint firstItem="znJ-l8-nQU" firstAttribute="bottom" secondItem="KTI-2W-N60" secondAttribute="bottom" id="oyp-ls-CG4"/>
@@ -510,22 +497,25 @@
                             <constraint firstItem="HhQ-LN-bw9" firstAttribute="centerY" secondItem="KTI-2W-N60" secondAttribute="centerY" constant="-50" id="vN5-Ec-g9K"/>
                             <constraint firstItem="laS-WY-nqP" firstAttribute="centerY" secondItem="KTI-2W-N60" secondAttribute="centerY" constant="-50" id="xAn-Pz-6id"/>
                             <constraint firstItem="9sW-GS-UGd" firstAttribute="top" secondItem="KTI-2W-N60" secondAttribute="top" id="y3b-5s-hFK"/>
+                            <constraint firstItem="9sW-GS-UGd" firstAttribute="bottom" secondItem="caa-dS-H4Z" secondAttribute="bottom" id="yUl-bo-OjA"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1jF-Z8-ILL"/>
                     </view>
                     <navigationItem key="navigationItem" id="HXr-yg-a9h"/>
                     <connections>
+                        <outlet property="addFolderButton" destination="StA-v0-Jaj" id="dbK-H6-68U"/>
+                        <outlet property="bottomButtons" destination="caa-dS-H4Z" id="Bmu-t6-fDL"/>
+                        <outlet property="buttonsBottomConstraint" destination="yUl-bo-OjA" id="fAx-c5-BGj"/>
                         <outlet property="cameraView" destination="9sW-GS-UGd" id="WwB-Wm-Ijb"/>
                         <outlet property="capturedImageView" destination="HhQ-LN-bw9" id="ObQ-qO-WdQ"/>
                         <outlet property="clearBtn" destination="GF2-TX-8Od" id="Mda-Nr-DRu"/>
                         <outlet property="flippedTableView" destination="xnH-3u-a6l" id="huL-Cd-vHq"/>
-                        <outlet property="gradientBar" destination="0Tw-Qs-eXp" id="N62-vu-TVm"/>
-                        <outlet property="gradientBarY" destination="eqx-we-mhX" id="Gq9-S2-pTK"/>
                         <outlet property="horizPopUpConstraint" destination="8zG-ED-MdC" id="Eip-fE-XRC"/>
                         <outlet property="mainTableBlur" destination="U1n-C1-SP0" id="THb-tq-UHd"/>
                         <outlet property="mainTableView" destination="8j3-a3-xsx" id="oiK-Ri-m9y"/>
                         <outlet property="mainTableViewHorizConstraint" destination="sXg-6c-WWE" id="ZhE-k3-uIG"/>
                         <outlet property="photoTableView" destination="eba-pb-Z9H" id="qA5-Cl-O1h"/>
+                        <outlet property="saveButton" destination="B7R-yW-N75" id="IE6-dN-8pI"/>
                         <outlet property="thumbBtn" destination="laS-WY-nqP" id="bHV-H8-GIu"/>
                         <outlet property="visualEffectedView" destination="znJ-l8-nQU" id="mah-9G-iCP"/>
                         <segue destination="bLg-ih-cKh" kind="show" identifier="goToPhotos" id="GGi-A0-kpA"/>

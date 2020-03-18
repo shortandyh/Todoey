@@ -53,9 +53,11 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     @IBOutlet weak var flippedTableView: RoundedImageView!
     @IBOutlet weak var clearBtn: RoundedShadowButton!
     @IBOutlet weak var thumbBtn: RoundedShadowButton!
+    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var addFolderButton: UIButton!
     @IBOutlet weak var gradientBar: UIView!
     
-    @IBOutlet weak var gradientBarY: NSLayoutConstraint!
+    @IBOutlet weak var buttonsBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var visualEffectedView: UIVisualEffectView!
     @IBOutlet weak var mainTableBlur: UIVisualEffectView!
     @IBOutlet weak var cameraView: UIView!
@@ -63,12 +65,15 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     @IBOutlet weak var mainTableView: UITableView!
     @IBOutlet weak var horizPopUpConstraint: NSLayoutConstraint!
     @IBOutlet weak var mainTableViewHorizConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomButtons: UIStackView!
     
     var animator = UIViewPropertyAnimator(duration: 0.5, curve: .linear)
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        screenHeightPercentage = (cameraView.frame.size.height * 0.15)
         
         addPanGesture(view: mainTableView)
         
@@ -78,6 +83,22 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
             
             self.mainTableBlur.effect = UIBlurEffect(style: .dark)
         }
+        
+        print("button constant is \(buttonsBottomConstraint.constant)")
+        
+        buttonsBottomConstraint.constant = -screenHeightPercentage
+        
+//        
+//            bottomButtons.leadingAnchor.constraint(equalTo: cameraView.leadingAnchor)
+//            bottomButtons.trailingAnchor.constraint(equalTo: cameraView.trailingAnchor)
+//            bottomButtons.bottomAnchor.constraint(equalTo: cameraView.bottomAnchor, constant: screenHeightPercentage)
+//            bottomButtons.heightAnchor.constraint(equalToConstant: screenHeightPercentage)
+        
+        
+//        NSLayoutConstraint.activate(bottomButtonConstraints)
+        
+//        bottomButtons.leadingAnchor = cameraView.leadingAnchor
+        
         
         
 //        self.revealViewController()?.rearViewRevealWidth = self.view.frame.width - 8
@@ -98,16 +119,23 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
 
         
 //        SVProgressHUD.dismiss()
-        screenHeightPercentage = (view.frame.size.height / 10)
-        print(screenHeightPercentage)
+        
+//        print(screenHeightPercentage)
 //        gradientBar.setGradientBackground()
 //        gradientBar.frame.size.height = screenHeightPercentage * -1
 //        gradientBarBottom.constant = screenHeightPercentage * -1
 //        gradientBarTop.constant = screenHeightPercentage
         
 //        gradientBar.center.y = gradientBar.frame.size.height / 2
-        gradientBarY.constant = (cameraView.frame.size.height / 2) + (gradientBar.frame.size.height / 2)
-        
+//        gradientBar.frame.size.height = screenHeightPercentage
+//        gradientBarY.constant = (cameraView.frame.size.height / 2) + screenHeightPercentage
+//        gradientBarY.constant = 450
+//        print("gradientBarY.constant is \(gradientBarY.constant)")
+        print("screen height is \(cameraView.frame.size.height)")
+//        print("gradientBar is \(gradientBar.frame.size.height)")
+        print("screenHeightPercentage is \(screenHeightPercentage)")
+        print("clearbutn is \(clearBtn.frame.size.width)")
+
         
         photoTableView.dataSource = self
         photoTableView.delegate = self
@@ -129,7 +157,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         
         capturedImageView.isHidden = true
         thumbBtn.isHidden = true
-        clearBtn.isHidden = true
+//        clearBtn.isHidden = true
         
         flippedTableView.isHidden = true
         
@@ -216,7 +244,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     
     @IBAction func ClearBttn(_ sender: Any) {
         animateOut()
-        animateDown(duration: 0.3)
+        animateDown(duration: 0.2)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
             //self.flipTableView.isHidden = true
             self.visualEffectedView.isHidden = true
@@ -239,7 +267,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         visualEffectedView.isHidden = true
         thumbBtn.isHidden = true
 //        clearBtn.isHidden = true
-        animateDown(duration: 0.9)
+        animateDown(duration: 0.4)
         
         
         if let currentCategory = self.selectedProject {
@@ -299,7 +327,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         let settings = AVCapturePhotoSettings()
         settings.previewPhotoFormat = settings.embeddedThumbnailPhotoFormat
         cameraOutput.capturePhoto(with: settings, delegate: self)
-//        animateUp()
+        animateUp()
     }
     
     
@@ -386,14 +414,16 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     }
     
     func animateUp() {
-        gradientBarY.constant = (cameraView.frame.size.height / 2) - (gradientBar.frame.size.height / 2)
-        UIView.animate(withDuration: 0.5, animations: {
+//        gradientBarY.constant = (cameraView.frame.size.height / 2) - (gradientBar.frame.size.height / 2)
+        buttonsBottomConstraint.constant = screenHeightPercentage * 0.3
+        UIView.animate(withDuration: 0.4, animations: {
             self.view.layoutIfNeeded()
         })
     }
     
     func animateDown(duration: Double) {
-        gradientBarY.constant = (cameraView.frame.size.height / 2) - (gradientBar.frame.size.height / 2)
+//        gradientBarY.constant = (cameraView.frame.size.height / 2) - (gradientBar.frame.size.height / 2)
+        buttonsBottomConstraint.constant = -screenHeightPercentage
         UIView.animate(withDuration: duration, animations: {
             self.view.layoutIfNeeded()
         })
@@ -467,7 +497,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
             
             
         case .ended:
-            if mainTableViewHorizConstraint.constant <= (currentViewPosition * 0.4) {
+            if mainTableViewHorizConstraint.constant <= (currentViewPosition * 0.7) {
                 UIView.animate(withDuration: 0.25) {
                     self.mainTableViewHorizConstraint.constant = 0.0
                     self.animator.fractionComplete = 1.0
