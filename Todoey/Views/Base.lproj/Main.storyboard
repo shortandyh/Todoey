@@ -404,6 +404,9 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="imageEdgeInsets" minX="35" minY="35" maxX="35" maxY="35"/>
                                         <state key="normal" title="Button" image="AddFolderIcon"/>
+                                        <connections>
+                                            <action selector="addButtonPressed:" destination="bzE-u6-PVP" eventType="touchUpInside" id="ibb-1t-6mT"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GF2-TX-8Od" customClass="RoundedShadowButton" customModule="Todoey" customModuleProvider="target">
                                         <rect key="frame" x="131.5" y="0.0" width="112" height="80"/>

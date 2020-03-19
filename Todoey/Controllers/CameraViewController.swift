@@ -567,6 +567,52 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         view.addGestureRecognizer(panRecognizer)
     }
     
+    @IBAction func addButtonPressed(_ sender: Any) {
+        
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Add New Category", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add", style: .default) { (action) in
+            
+            let newCategory = Category()
+            newCategory.name = textField.text!
+            
+            
+            
+            
+            //MARK: - Core Data
+            //            self.categories.append(newCategory)
+            
+            self.saveInRealm(category: newCategory)
+            
+        }
+        
+        alert.addAction(action)
+        
+        alert.addTextField { (field) in
+            textField = field
+            textField.placeholder = "Add a New Category"
+        }
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+    func saveInRealm(category: Category) {
+        
+        do {
+            try realm.write {
+                realm.add(category)
+            }
+        } catch {
+            print("Error saving category \(error)")
+        }
+        
+        mainTableView.reloadData()
+        photoTableView.reloadData()
+    }
+    
 //    func addPanGestures (view: UIView) {
 //        let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(dismissTable(sender:)))
 //        view.addGestureRecognizer(panRecognizer)
