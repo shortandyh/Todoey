@@ -75,7 +75,8 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         
         screenHeightPercentage = (cameraView.frame.size.height * 0.15)
         
-        addPanGesture(view: mainTableView)
+        addRightEdgePanGesture(view: mainTableView)
+//        addLeftEdgePanGesture(view: mainTableView)
         
         
         animator.addAnimations {
@@ -173,6 +174,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
 //        }
         
 //        screenEdgeRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector())
+        
         
         
     }
@@ -458,6 +460,8 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         
     }
     
+    
+    
     @objc func swipeTable(sender: UIScreenEdgePanGestureRecognizer) {
         
         let translation = sender.translation(in: view)
@@ -497,7 +501,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
             
             
         case .ended:
-            if mainTableViewHorizConstraint.constant <= (currentViewPosition * 0.7) {
+            if mainTableViewHorizConstraint.constant <= (currentViewPosition * 0.5) {
                 UIView.animate(withDuration: 0.25) {
                     self.mainTableViewHorizConstraint.constant = 0.0
                     self.animator.fractionComplete = 1.0
@@ -558,14 +562,24 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
 
     }
     
-    func addPanGesture (view: UIView) {
-        let screenEdgeRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(swipeTable(sender:)))
-        screenEdgeRecognizer.edges = .right
-        self.view.addGestureRecognizer(screenEdgeRecognizer)
-        
-        let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(dismissTable(sender:)))
-        view.addGestureRecognizer(panRecognizer)
+    func addRightEdgePanGesture (view: UIView) {
+        let rightScreenEdgeRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(swipeTable(sender:)))
+        rightScreenEdgeRecognizer.edges = .right
+        self.view.addGestureRecognizer(rightScreenEdgeRecognizer)
+        let leftScreenEdgeRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(swipeTable(sender:)))
+        leftScreenEdgeRecognizer.edges = .left
+        self.view.addGestureRecognizer(leftScreenEdgeRecognizer)
+//        let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(dismissTable(sender:)))
+//        view.addGestureRecognizer(panRecognizer)
     }
+    
+//    func addPanGesture (view: UIView) {
+//        let screenEdgeRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(swipeTable(sender:)))
+//        screenEdgeRecognizer.edges = .left
+//        self.view.addGestureRecognizer(screenEdgeRecognizer)
+//        let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(dismissTable(sender:)))
+//        view.addGestureRecognizer(panRecognizer)
+//    }
     
     @IBAction func addButtonPressed(_ sender: Any) {
         
