@@ -106,6 +106,8 @@ class PhotosCollectionViewController: UICollectionViewController, UICollectionVi
         
         
         
+        
+        
 //  block for displaying subview
         
 //        infoImage.image = item?.fullImage()
@@ -133,6 +135,14 @@ class PhotosCollectionViewController: UICollectionViewController, UICollectionVi
 
     }
     
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = collectionView.frame.width / 4 - 1
+        
+        return CGSize(width: width, height: width)
+    }
+
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let item = sender as? Item {
             if let destinationVC = segue.destination as? ImageViewController {
@@ -141,6 +151,14 @@ class PhotosCollectionViewController: UICollectionViewController, UICollectionVi
 
         }
         
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 1.0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 1.0
     }
 //
 ////        if let indexPath = collectionView?.indexPathsForSelectedItems {
